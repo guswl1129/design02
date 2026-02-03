@@ -1,41 +1,45 @@
 package com.handiboard.controller;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 import com.handiboard.dao.BoardDAO;
 import com.handiboard.dto.BoardDTO;
-//import com.jyjjang.dto.LoginDTO;
 
-@WebServlet("/board")
-public class BoardController extends HttpServlet {
+@WebServlet("/delete")
+public class BoardDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public BoardController() {
+       
+    public BoardDeleteController() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 데이터베이스에 물어서 데이터 가져오기->dao, dto
-		// jsp에 출력->dispatcher??
+		System.out.println("delete doGet");
+		
+		int board_no;
+		try {
+			board_no=Integer.parseInt(request.getParameter("board_no"));
+		} catch (Exception e) {
+			System.out.println("invalid board_no format");
+			response.sendRedirect(request.getContextPath()+"/board");
+			return;
+		}
+		
 		BoardDAO dao=new BoardDAO();
-		List<BoardDTO> list =dao.getList();
+		BoardDTO dto=dao.getBoard(board_no);
+		dao.deleteBoard(dto);
 		
-		//데이터 첨부하기
-		request.setAttribute("list", list);	//이름, 값
-		
-		RequestDispatcher rd=request.getRequestDispatcher("list.jsp");
-		rd.forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/board");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		System.out.println("delete doPost");
 	}
 
 }
+

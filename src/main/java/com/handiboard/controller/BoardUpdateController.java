@@ -7,35 +7,46 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 import com.handiboard.dao.BoardDAO;
 import com.handiboard.dto.BoardDTO;
-//import com.jyjjang.dto.LoginDTO;
 
-@WebServlet("/board")
-public class BoardController extends HttpServlet {
+@WebServlet("/update")
+public class BoardUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public BoardController() {
+       
+    public boardUpdate() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 데이터베이스에 물어서 데이터 가져오기->dao, dto
-		// jsp에 출력->dispatcher??
+		System.out.println("update doGet");
+		
+		int board_no;
+		try {
+			board_no=Integer.parseInt(request.getParameter("board_no"));
+		} catch (Exception e) {
+			System.out.println("invalid board_no format");
+			response.sendRedirect(request.getContextPath()+"/board");
+			return;
+		}
+		
 		BoardDAO dao=new BoardDAO();
-		List<BoardDTO> list =dao.getList();
+		BoardDTO dto=dao.getBoard(board_no);
 		
-		//데이터 첨부하기
-		request.setAttribute("list", list);	//이름, 값
+		if(dto==null) {
+			response.sendRedirect(request.getContextPath()+"/board");
+			return;
+		}
 		
-		RequestDispatcher rd=request.getRequestDispatcher("list.jsp");
+		request.setAttribute("dto", dto);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("update.jsp");
 		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		System.out.println("update doPost");
 	}
 
 }
