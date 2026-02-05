@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 /**
  * Servlet implementation class AddMoney
  */
-@WebServlet("/addMoney")
+@WebServlet("/addPoint")
 public class AddPointController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -58,8 +58,8 @@ public class AddPointController extends HttpServlet {
 		}
 		AddPointDAO dao = new AddPointDAO();
 		UserDTO dto = new UserDTO();
-//		request.setAttribute("mycoin", dto.getPoint());
-		int result = dao.AddMoney(userId, sum);
+		request.setAttribute("userPoint", dto.getPoint());
+		int result = dao.AddPoint(userId, sum);
 		int result2=dao.updatedPoint(dto, userId);// 새로 업데이트 된 포인트를 db에서 받아오기
 //		dto.getPoint();
 		if(result==1&&result2==1) {

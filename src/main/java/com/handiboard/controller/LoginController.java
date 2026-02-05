@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import com.handiboard.dao.LoginDAO; // 실제 패키지 경로에 맞게 수정
@@ -46,8 +48,12 @@ public class LoginController extends HttpServlet {
 			System.out.println("로그인 성공");
 			// 디스패치 사용
 			request.setAttribute("nickname", dto.getName());
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("userId", id);
+			session.setAttribute("userPoint", dto.getPoint());
 
-			RequestDispatcher rd = request.getRequestDispatcher("board.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("loginAction.jsp");
 			rd.forward(request, response);
 		} else {
 			System.out.println("아이디 또는 패스워드 오류");

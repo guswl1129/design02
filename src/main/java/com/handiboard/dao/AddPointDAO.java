@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import com.handiboard.util.*;
 
 public class AddPointDAO {
-	public int AddMoney(String userId, int point) {
+	public int AddPoint(String userId, int point) {
 		String sql = "Update Users set user_point=? where user_id=?";
 		
 		try (Connection conn = DBConnection.getInstance().getConn();
