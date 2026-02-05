@@ -18,6 +18,8 @@
 	<a href="logout">로그아웃</a>
 	<br>
 	<a href="addMoney.jsp">충전</a>
+	<br>
+	<a href="${pageContext.request.contextPath}/myPage">마이페이지</a>
 	
 </body>
 </html>
