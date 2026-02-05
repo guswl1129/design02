@@ -169,7 +169,7 @@
 	chargeBtn.addEventListener('click', () => {
 		
 	        alert(selectedMoney+"원 결제 완료!"+"\n"+coin+" 타래를 충전합니다.");
-	        
+	        /**/
 	 });
     }
    
