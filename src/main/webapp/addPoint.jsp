@@ -24,11 +24,11 @@
         font-size: 20px;
         margin-bottom: 20px;
         display: flex; /* 요소들을 가로로 배치 */
-        gap: 200px;
+        gap: 150px;
         background-color: #D6A3FF;
         border-radius: 15px;
         margin-top:10px;
-        padding: 10px;
+        padding: 20px; /*글씨와 박스 사이의 간격*/
     	justify-content: space-between; /* 양 끝으로 밀어내기 */
     	align-items: center;
     	with: 100%;
@@ -163,11 +163,14 @@
     	const hiddenInput = document.getElementById("selectedMoney");
     	// value에 금액 저장하기
     	hiddenInput.value = coin;
-    	selectedMoney = money;
+    	selectedMoney = money; // 만약 얼마 들었는지 구현하려면 이 변수를 이용한다.
     	
     	chargeBtn.disabled = false;
 	chargeBtn.addEventListener('click', () => {
-	        alert(coin + " 타래를 충전합니다.");
+		
+	        alert(selectedMoney+"원 결제 완료!"+"\n"+coin+" 타래를 충전합니다.");
+	        //alert(coin + " 타래를 충전합니다.");
+	        
 	 });
     }
    
