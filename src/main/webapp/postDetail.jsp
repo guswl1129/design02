@@ -1,3 +1,4 @@
+<%@page import="com.handiboard.dto.UserDTO"%>
 <%@page import="com.handiboard.dto.BoardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,7 +11,10 @@
 <body>
 	<h1>detail</h1>
 	
-	<%BoardDTO dto=(BoardDTO)request.getAttribute("dto"); %>
+	<%
+	BoardDTO dto=(BoardDTO)request.getAttribute("dto");
+	UserDTO user=(UserDTO)session.getAttribute("user");
+	%>
 	
 	<%
 	if(dto==null){
@@ -48,6 +52,7 @@
 	</p>
 		<form action="./like" method="post">
             <input type="hidden" name="board_no" value="<%=dto.getBoard_no() %>"></input>
+            <input type="hidden" name="user_id" value="<%=dto.getUser_id() %>"></input>
 			<button>좋아요</button> : <%=dto.getLike_count() %>
         </form>
 

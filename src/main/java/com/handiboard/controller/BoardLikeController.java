@@ -12,6 +12,7 @@ import java.io.IOException;
 import com.handiboard.dao.BoardDAO;
 import com.handiboard.dao.LikeDAO;
 import com.handiboard.dto.BoardDTO;
+import com.handiboard.dto.UserDTO;
 
 @WebServlet("/like")
 public class BoardLikeController extends HttpServlet {
@@ -51,22 +52,24 @@ public class BoardLikeController extends HttpServlet {
 		} else {
 			userId = request.getParameter("user_id");
 		}
-//		// if still null, cannot proceed
-//		if (userId == null || userId.isEmpty()) {
-//			System.out.println("user_id is missing; redirecting to board");
-//			response.sendRedirect(request.getContextPath()+"/board");
-//			return;
-//		}
+		// if still null or empty, cannot proceed - redirect to login or board list
+		if (userId == null || userId.trim().isEmpty()) {
+			System.out.println("user_id is missing; redirecting to login page");
+			response.sendRedirect(request.getContextPath() + "/login.jsp");
+			return;
+		}
 
 		// set mandatory dto fields before DAO calls to avoid null insertion
 		dto.setBoard_no(board_no);
 		dto.setUser_id(userId);
 
+		System.out.println("userId: "+userId);	//:imoony, 글 쓴 사람
+		
 		if(like_stat==0) { 	//좋아요 없음->좋아요
-			res=likeDao.like(dto); 	//LikeDTO를 만들 것인지 그냥 쓰여 있는 대로 매개변수를 넣을 것인지
+			res=likeDao.like(dto.getUser_id(),dto.getBoard_no()); 	//그냥 쓰여 있는 대로 매개변수/로그인한 유저가 아니라 글쓴 유저 id가 넘어감
 			if(res!=0) {
 				System.out.println("liked");
-				System.out.println("user_id: " + dto.getUser_id());
+				System.out.println("user_id: " + userId);
 				dto.setLike_count(1);
 				dao.likeBoard(dto);
 				like_stat=1;
@@ -74,10 +77,10 @@ public class BoardLikeController extends HttpServlet {
 				System.out.println("like failed");
 			}
 		} else { 	//좋아요 있음->좋아요 취소
-			res=likeDao.unlike(dto);
+			res=likeDao.unlike(dto.getUser_id(),dto.getBoard_no());
 			if(res!=0) {
 				System.out.println("unliked");
-				System.out.println("user_id: " + dto.getUser_id());
+				System.out.println("user_id: " + userId);
 				dto.setLike_count(-1);
 				dao.likeBoard(dto);
 				like_stat=0;
@@ -86,19 +89,13 @@ public class BoardLikeController extends HttpServlet {
 			}
 		}
 		
-//		int like=request.getParameter("like")!=null?Integer.parseInt(request.getParameter("like")):-1;
-		
-//		dto.setBoard_no(board_no);
-//		dto.setLike_count(like);
 		
 		dto=dao.getBoard(board_no);
 		
 		
-		System.out.println("like count updated to: " + dto.getLike_count());	//이제 숫자는 제대로 뜨는데 눌러도 아무것도 안됨
+		System.out.println("like count updated to: " + dto.getLike_count());
 		
 		response.sendRedirect(request.getContextPath() + "/detail?board_no="+board_no);
-//		RequestDispatcher rd=request.getRequestDispatcher("detail.jsp");
-//		rd.forward(request, response);
 	}
 
 }

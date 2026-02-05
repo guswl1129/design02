@@ -30,7 +30,7 @@ public class BoardController extends HttpServlet {
 		//데이터 첨부하기
 		request.setAttribute("list", list);	//이름, 값
 		
-		RequestDispatcher rd=request.getRequestDispatcher("list.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("mainBoard.jsp");
 		rd.forward(request, response);
 	}
 

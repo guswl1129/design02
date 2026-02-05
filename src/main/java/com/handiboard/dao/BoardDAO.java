@@ -23,7 +23,7 @@ public class BoardDAO {
 				BoardDTO dto=new BoardDTO();
 				dto.setBoard_no(rs.getInt("board_no"));
 				dto.setTitle(rs.getString("board_title"));
-				dto.setUser_id(rs.getString("user_id"));
+				dto.setUser_id(rs.getString("user_id"));	//user_id<->usesr_no?db에 따라 다름
 				dto.setDate(rs.getString("board_date"));
 				dto.setLike_count(rs.getInt("board_like"));
 				list.add(dto);
@@ -60,11 +60,12 @@ public class BoardDAO {
 	}
 	
 	// 글쓰기
-	// Reworked: accept a BoardDTO, use proper parameter placeholders, executeUpdate, and return the generated BoardController id
+	// Reworked: accept a BoardDTO, use proper parameter placeholders, executeUpdate, and return the generated board id
 	public void createBoard(BoardDTO dto){
 		if(dto == null) throw new IllegalArgumentException("BoardDTO must not be null");
 		String sql = "INSERT INTO board(board_title, board_content, user_id) VALUES(?, ?, ?)";
-		// Returns generated key (BoardController id) on success, -1 on failure
+
+		// Returns generated key (board id) on success, -1 on failure
 		try (Connection conn = DBConnection.getInstance().getConn();
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
 			pstmt.setString(1, dto.getTitle());
