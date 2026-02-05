@@ -1,0 +1,18 @@
+# 이클립스 설정 파일
+.settings/
+.metadata/
+.classpath
+.project
+
+# 빌드 결과물
+bin/
+build/
+target/
+
+# 서버 설정 (어제 우리를 힘들게 했던 주범!)
+Servers/
+.recommenders/
+
+# OS 파일
+.DS_Store
+Thumbs.db
