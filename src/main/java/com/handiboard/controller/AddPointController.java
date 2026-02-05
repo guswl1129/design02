@@ -2,10 +2,8 @@ package com.handiboard.controller;
 
 import java.io.IOException;
 
-import com.handiboard.dto.UserDTO;
 import com.handiboard.dao.AddPointDAO;
-import com.handiboard.dao.InsertMemberDAO;
-
+import com.handiboard.dto.UserDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -48,7 +46,6 @@ public class AddPointController extends HttpServlet {
 		// 선택한 금액
 		String coin = request.getParameter("coin");
 		int point = Integer.parseInt(coin);
-//		int ownPoint = (int) request.getSession().getAttribute("userPoint");
 		System.out.println("충전 타래: "+coin);
 		
 		int sum = userPoint+point;
@@ -63,14 +60,14 @@ public class AddPointController extends HttpServlet {
 		UserDTO dto = new UserDTO();
 //		request.setAttribute("mycoin", dto.getPoint());
 		int result = dao.AddMoney(userId, sum);
-		int result2=dao.updatedPoint(dto, userId);// 불러오기
+		int result2=dao.updatedPoint(dto, userId);// 새로 업데이트 된 포인트를 db에서 받아오기
 //		dto.getPoint();
 		if(result==1&&result2==1) {
 			
 			System.out.println("충전성공");
-			session.setAttribute("userPoint", dto.getPoint());
-			request.setAttribute("userPoint", dto.getPoint());
-			response.sendRedirect("addMoney.jsp");
+			session.setAttribute("userPoint", dto.getPoint()); // 세션의 값을 새로운 포인트로 업데이트
+			request.setAttribute("userPoint", dto.getPoint()); // 업데이트 된 포인트를 jsp파일에 보내서 웹에 보이게하기
+			response.sendRedirect("addPoint.jsp");
 			// 타래 값을 바꿔야함
 		}else {
 			System.out.println("충전실패");

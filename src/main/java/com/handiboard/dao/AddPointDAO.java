@@ -4,10 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.handiboard.dto.*;
 import jakarta.servlet.http.HttpSession;
-
-import com.handiboard.dto.UserDTO;
-import com.handiboard.util.DBConnection;
+import com.handiboard.util.*;
 
 public class AddPointDAO {
 	public int AddMoney(String userId, int point) {

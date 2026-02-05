@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/myPageController")
+@WebServlet("/myPage")
 public class MyPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageDAO dao; 
@@ -27,8 +27,9 @@ public class MyPageController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		HttpSession session = request.getSession(false);
+		//세션 불러오기
+		HttpSession session = request.getSession(false); //false: 기존 세션 x -> null 값 반환
+		
 		if(session != null && session.getAttribute("userId") != null ) {
 			String userId = (String)session.getAttribute("userId");
 			UserDTO userDTO = dao.getUserinfo(userId);
