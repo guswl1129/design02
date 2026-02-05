@@ -26,16 +26,17 @@ public class JoinController extends HttpServlet {
         super();
     }
 
+    // GET 방식: 회원가입 페이지를 보여줌	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("join.jsp");
-		rd.forward(request, response);
-	
+		// RequestDispatcher rd = request.getRequestDispatcher("join.jsp");
+		// rd.forward(request, response); // 아래 코드로 축약 
+		request.getRequestDispatcher("join.jsp").forward(request, response);
 	}
 
-	// 데이터베이스 연결 
+	// POST 방식: 회원가입 데이터를 DB에 저장
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 설정 
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8"); // 한글 깨짐 방지
 		
 		// 파라미터 수집
 		String userid = request.getParameter("userid");
@@ -60,11 +61,11 @@ public class JoinController extends HttpServlet {
 		InsertMemberDAO dao = new InsertMemberDAO();
 		int result = dao.insertMember(dto);
 		
-		// result 결과 처리 
+		// 성공 시 성공 페이지로 이동
 		if (result > 0) {
-			response.sendRedirect("joinOk.jsp?success=1"); // 가입 성공 시 가입 성공 페이지로 
+			response.sendRedirect("joinOk.jsp"); 
 		} else {
-			response.sendRedirect("join.jsp?error=1"); // 가입 실패 시 다시 회원가입 페이지로 
+			response.sendRedirect("join.jsp"); 
 			
 		}
 		

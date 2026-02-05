@@ -14,7 +14,7 @@ public class BoardDAO {
 	// 글 리스트
 	public List<BoardDTO> getList(){
 		List<BoardDTO> list=new ArrayList<BoardDTO>();
-		String sql="SELECT * FROM BoardController WHERE board_del=1 ORDER BY board_no DESC";
+		String sql="SELECT * FROM board WHERE board_del=1 ORDER BY board_no DESC";
 		try (Connection conn=DBConnection.getInstance().getConn();
 				PreparedStatement pstmt=conn.prepareStatement(sql);){
 			ResultSet rs=pstmt.executeQuery();
@@ -36,7 +36,7 @@ public class BoardDAO {
 	
 	// 글 하나 보기
 	public BoardDTO getBoard(int board_no) {
-		String sql="SELECT * FROM BoardController WHERE board_no=?";
+		String sql="SELECT * FROM board WHERE board_no=?";
 		
 				BoardDTO dto=new BoardDTO();
 				
@@ -63,7 +63,7 @@ public class BoardDAO {
 	// Reworked: accept a BoardDTO, use proper parameter placeholders, executeUpdate, and return the generated BoardController id
 	public void createBoard(BoardDTO dto){
 		if(dto == null) throw new IllegalArgumentException("BoardDTO must not be null");
-		String sql = "INSERT INTO BoardController(board_title, board_content, user_id) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO board(board_title, board_content, user_id) VALUES(?, ?, ?)";
 		// Returns generated key (BoardController id) on success, -1 on failure
 		try (Connection conn = DBConnection.getInstance().getConn();
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
@@ -80,7 +80,7 @@ public class BoardDAO {
 	
 	// 수정
 	public void updateBoard(BoardDTO dto) {
-		String sql="UPDATE BoardController SET board_title=?, board_content=? WHERE board_no=?";
+		String sql="UPDATE board SET board_title=?, board_content=? WHERE board_no=?";
 		
 		try (Connection conn=DBConnection.getInstance().getConn();
 				PreparedStatement pstmt=conn.prepareStatement(sql);){
@@ -95,7 +95,7 @@ public class BoardDAO {
 	
 	// 삭제
 	public void deleteBoard(BoardDTO dto) {
-		String sql="UPDATE BoardController SET board_del=0 WHERE board_no=?";
+		String sql="UPDATE board SET board_del=0 WHERE board_no=?";
 		
 		try (Connection conn=DBConnection.getInstance().getConn();
 				PreparedStatement pstmt=conn.prepareStatement(sql);){
@@ -108,7 +108,7 @@ public class BoardDAO {
 	}
 	// 좋아요 누르기
 	public int likeBoard(BoardDTO dto) {
-		String sql="UPDATE BoardController SET board_like=board_like+? WHERE board_no=?";
+		String sql="UPDATE board SET board_like=board_like+? WHERE board_no=?";
 		
 		try (Connection conn=DBConnection.getInstance().getConn();
 				PreparedStatement pstmt=conn.prepareStatement(sql);){
