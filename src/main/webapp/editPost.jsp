@@ -22,7 +22,7 @@
 		%>
 			<!-- 글쓰기 화면: get/ db에 글쓰기: post -->
 			<button style="align-self: right" onclick="location.href='./board'">리스트로 돌아가기</button>
-			<form action="./updateAction" method="post">
+			<form action="./update" method="post">
 			    <input type="hidden" name="board_no" value="<%=dto.getBoard_no() %>">
 				<input type="text" name="title" value="<%=dto.getTitle() %>">
 				<textarea name="content" value=""><%=dto.getContent()%></textarea>
