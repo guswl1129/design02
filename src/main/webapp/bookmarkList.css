@@ -1,0 +1,27 @@
+@charset "UTF-8";
+/*bookmarkList.jsp 북마크 모아보기 페이지 전용 css*/
+/*본문 (말줄임표 처리)*/
+.post-content {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 두 줄 제한 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 좋아요 아이콘 및 숫자 */
+.post-stats {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.85rem;
+    color: #ff4d4f;
+    margin-top: 4px;
+}
+
+#like_icon {
+    width: 14px;
+    height: 14px;
+}
