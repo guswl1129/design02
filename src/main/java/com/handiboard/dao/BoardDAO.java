@@ -23,9 +23,55 @@ public class BoardDAO {
 				BoardDTO dto=new BoardDTO();
 				dto.setBoard_no(rs.getInt("board_no"));
 				dto.setTitle(rs.getString("board_title"));
-				dto.setUser_id(rs.getString("user_id"));	//user_id<->usesr_no?db에 따라 다름
-				dto.setDate(rs.getString("board_date"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setView_count(rs.getInt("board_view"));
 				dto.setLike_count(rs.getInt("board_like"));
+				dto.setDate(rs.getString("board_date"));
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	// 글 개수 세기
+	public int getAllCount() {
+		int board_count=0;
+		String sql="SELECT COUNT(*) AS count FROM board WHERE board_del=1";
+		try (Connection conn=DBConnection.getInstance().getConn();
+				PreparedStatement pstmt=conn.prepareStatement(sql);){
+			ResultSet rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				board_count=rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return board_count;
+	}
+	
+	// 페이지 단위로 글 리스트
+	public List<BoardDTO> getPageList(int limit, int offset){
+		List<BoardDTO> list=new ArrayList<BoardDTO>();
+		String sql="SELECT * FROM board WHERE board_del=1 ORDER BY board_no DESC LIMIT ? OFFSET ?";
+		try (Connection conn=DBConnection.getInstance().getConn();
+				PreparedStatement pstmt=conn.prepareStatement(sql);){
+			
+			pstmt.setInt(1, limit);
+			pstmt.setInt(2, offset);
+			ResultSet rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardDTO dto=new BoardDTO();
+				dto.setBoard_no(rs.getInt("board_no"));
+				dto.setTitle(rs.getString("board_title"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setView_count(rs.getInt("board_view"));
+				dto.setLike_count(rs.getInt("board_like"));
+				dto.setDate(rs.getString("board_date"));
 				list.add(dto);
 			}
 		} catch (Exception e) {
@@ -43,20 +89,23 @@ public class BoardDAO {
 		try(Connection conn=DBConnection.getInstance().getConn();
 				PreparedStatement pstmt=conn.prepareStatement(sql);){
 			pstmt.setInt(1, board_no);
-			ResultSet rs=pstmt.executeQuery();
-			
-			while(rs.next()) {
-				dto.setBoard_no(rs.getInt("board_no"));
-				dto.setTitle(rs.getString("board_title"));
-				dto.setUser_id(rs.getString("user_id"));
-				dto.setContent(rs.getString("board_content"));
-				dto.setDate(rs.getString("board_date"));
-				dto.setLike_count(rs.getInt("board_like"));
-			}
+			try(ResultSet rs=pstmt.executeQuery();){
+				
+				while(rs.next()) {
+					dto.setBoard_no(rs.getInt("board_no"));
+					dto.setTitle(rs.getString("board_title"));
+					dto.setUser_id(rs.getString("user_id"));
+					dto.setContent(rs.getString("board_content"));
+					dto.setView_count(rs.getInt("board_view"));
+					dto.setDate(rs.getString("board_date"));
+					dto.setLike_count(rs.getInt("board_like"));
+					return dto;
+				}
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return dto;
+		return null;
 	}
 	
 	// 글쓰기
@@ -124,4 +173,18 @@ public class BoardDAO {
 	}
 	
 	// 조회수 올리기
+	public int viewCount(int board_no) {
+		int result=0;
+		String sql="UPDATE board SET board_view=board_view+1 WHERE board_no=?";
+		
+		try (Connection conn=DBConnection.getInstance().getConn();
+				PreparedStatement pstmt=conn.prepareStatement(sql);){
+			pstmt.setInt(1, board_no);
+			result=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }

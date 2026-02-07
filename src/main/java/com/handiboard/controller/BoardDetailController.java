@@ -34,6 +34,16 @@ public class BoardDetailController extends HttpServlet {
 		}
 		
 		BoardDAO dao=new BoardDAO();
+		
+		// 조회수 증가
+		int updatedRows=dao.viewCount(board_no);	// 업데이트된 행 수
+		System.out.println("updatedRows: "+updatedRows);
+		if(updatedRows==0) {
+			// 유효하지 않은 board_no?
+			response.sendRedirect(request.getContextPath()+"/board");
+			return;
+		}
+		
 		BoardDTO dto=dao.getBoard(board_no);
 		
 		if(dto==null) {

@@ -1,3 +1,4 @@
+<%@page import="com.handiboard.util.PagingResult"%>
 <%@page import="com.handiboard.dto.BoardDTO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -9,23 +10,26 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>list</h1>
-	
 	<!-- servlet에서 보낸 값 받기 -->
 	<%
 	// 값 받기
 	List<BoardDTO> list=(List<BoardDTO>)request.getAttribute("list");
 	%>
-	<h1>게시판</h1>
-	<%-- <%=list %> --%>
+	<%
+	PagingResult pageResult=(PagingResult)request.getAttribute("pagingResult");
+	%>
+	<h1>커뮤니티 게시판</h1>
 	
-	<table border="1" style="width: 100%">
-		<tr>
+	<div align="right"><button type="button" onclick="location.href='./write'">글쓰기</button></div>
+	<br>
+	<table border="1" style="width: 100%;">
+		<tr style="background-color: skyblue; font-weight: bold;">
 			<th>번호</th>
 			<th>제목</th>
 			<th>글쓴이</th>
-			<th>날짜</th>
+			<th>조회수</th>
 			<th>좋아요</th>
+			<th>날짜</th>
 		</tr>
 		
 		<%
@@ -40,14 +44,42 @@
 				</a>
 			</td>
 			<td><%=dto.getUser_id() %></td>
-			<td><%=dto.getDate() %></td>
+			<td><%=dto.getView_count() %></td>
 			<td><%=dto.getLike_count() %></td>
+			<td><%=dto.getDate() %></td>
 		</tr>
 		<%
 		}
 		%>
 	</table>
+	<br>
+	<!-- page -->
+	<div align="center">
+		<%
+		if(pageResult.isHasPrevious())
+        {
+		%>
+			<a href="./board?page=<%=pageResult.getStartPage()-1%>&pageSize=<%=pageResult.getPageSize()%>">이전</a>
+		<%
+        }
+		%>
+		<%
+		for(int i=pageResult.getStartPage(); i<=pageResult.getEndPage(); i++)
+	    {
+		%>
+			<a href="./board?page=<%=i %>&pageSize=<%=pageResult.getPageSize()%>"><%=i %></a>
+		<%
+	    }
+		%>
+		<%
+		if(pageResult.isHasNext())
+        {
+		%>
+			<a href="./board?page=<%=pageResult.getEndPage()+1%>&pageSize=<%=pageResult.getPageSize()%>">이후</a>
+		<%
+        }
+		%>
+	</div>
 	
-	<button type="button" onclick="location.href='./write'">글쓰기</button>
 </body>
 </html>
