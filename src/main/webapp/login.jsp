@@ -19,6 +19,7 @@
 		</form>
 		<br><br>
 	<a href="find.jsp">아이디/패스워드 찾기</a>
+	
 	</div>
 	<script>
 	    // URL의 파라미터를 분석하는 함수

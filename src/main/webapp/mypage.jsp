@@ -5,10 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/myHeader.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/mypage.css">
 <title>나의 디자인</title>
 </head>
 <body>
+	<div class=myHeader> <span onclick="history.back();">&lt;</span>마이페이지</div>
 	<%
 	UserDTO user = (UserDTO)request.getAttribute("user");
 	%>
@@ -26,10 +28,10 @@
 			<h3>나의 포인트</h3>
 		</div>
 		<div class="category-content">
-                <span id="point-balance"><%=user.getPoint()%>타래</span> <!--자바에서 값 가져오는 처리하기 -->
+                <span id="point-balance"><%=user.getPoint()%>타래</span>
 		</div>
 		<div class="category-content">
-			<a href="/chargePageController" class="menu-row">
+			<a href="addMoney.jsp" class="menu-row">
                 <span class ="menu-row-content">충전</span>
                 <span class="arrow-icon">></span>
 			</a>
@@ -63,14 +65,14 @@
 			<h3>나의 관심</h3>
 		</div>
 		<div class="category-content">
-			<a href="/editProfile" class="menu-row"> 
-                <span class ="menu-row-content">북마크 목록</span>
+			<a href="${pageContext.request.contextPath}/bookmark" class="menu-row"> 
+                <span class ="menu-row-content">북마크 모아보기</span>
 				<span class="arrow-icon">></span>
 			</a>
 		</div>
 		<div class="category-content">
 			<a href="/editProfile" class="menu-row"> 
-                <span class ="menu-row-content">관심 목록</span>
+                <span class ="menu-row-content">장바구니</span>
 				<span class="arrow-icon">></span>
 			</a>
 		</div>

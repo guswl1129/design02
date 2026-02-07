@@ -28,7 +28,7 @@
         background-color: #D6A3FF;
         border-radius: 15px;
         margin-top:10px;
-        padding: 20px; /*글씨와 박스 사이의 간격*/
+        padding: 20px; /*글씨와 박스 사이의 거리*/
     	justify-content: space-between; /* 양 끝으로 밀어내기 */
     	align-items: center;
     	with: 100%;
@@ -89,21 +89,28 @@
         background-color: #aaa;
         cursor: not-allowed;
     }
+
+    .header a:link, .header a:visited{
+    color:black;
+    text-decoration-line:none; 
+    
+    }
 </style>
 </head>
 <body>
 <div class="wrap">
     <div class="header">
-        <h1>타래 충전</h1>
+        <h1>ㅤㅤㅤㅤㅤ타래 충전ㅤㅤㅤㅤ<a href="board.jsp">X</a></h1>
+        
     </div>
-
+	
     <div class="content">
         <div class="mycoin">
             <span class="label">나의 보유 타래</span>
             <span id="myCoin" class="amount">${userPoint} 타래</span>  
         </div>
 	<br><br><br>
-        <form action="./addMoney" method="post">
+        <form action="./addPoint" method="post">
 	        <div class="payment-select-wrap">
 	            <div class="payment-select">
 	            	
@@ -169,7 +176,8 @@
 	chargeBtn.addEventListener('click', () => {
 		
 	        alert(selectedMoney+"원 결제 완료!"+"\n"+coin+" 타래를 충전합니다.");
-	        /**/ /**/
+	        //alert(coin + " 타래를 충전합니다.");
+	        
 	 });
     }
    

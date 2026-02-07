@@ -7,22 +7,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/purchaseController")
-public class PurchaseController extends HttpServlet {
+@WebServlet("/main")
+public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public PurchaseController() {
+    public MainController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// 나중에 여기서 데이터를 가져옵니다.
+        // 지금은 일단 메인 화면(board.jsp)으로 보내주기만 합니다.
+		request.getRequestDispatcher("/board.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
