@@ -16,11 +16,11 @@ body {
 	margin: 0;
 }
 
-.wrap {
-	text-align: center;
-	border: 2px solid black;
-	overflow-y: auto; /*내용이 길어지면 세로 스크롤 생성*/
+.wrap-container {
+	position: relative;
+	display: inline-block;
 }
+
 
 table {
 	border: 2px solid black;
@@ -47,49 +47,54 @@ th.content {
 td {
 	height: 20px;
 }
+
+.back-btn {
+	position: absolute;
+	right: 0;
+	bottom: -40px; /* 테두리 바로 아래 */
+}
+
 </style>
 </head>
 <body>
-	<div class="wrap">
-		<table>
-			<caption>내 타래</caption>
-			<tr>
-				<th class="num">번호</th>
-				<th class="content">내용</th>
-				<th class="date">날짜</th>
-				<!-- <th>&#x2764;&#xfe0f;</th>
-			<th>&#128204;</th> -->
-			</tr>
+	<div class="wrap-container">
+		<div class="wrap">
+			<table>
+				<caption>내 글</caption>
+				<tr>
+					<th class="num">번호</th>
+					<th class="content">내용</th>
+					<th class="date">날짜</th>
+				</tr>
 
-			<% 
-			List<BoardDTO> myPost = (List<BoardDTO>) request.getAttribute("myPosts");
-			
-			if (myPost != null && !myPost.isEmpty()) {
-			    int index = 1;
-			    for(BoardDTO dto : myPost) {
-			%>
-			<tr>
-			    <td><%= index++ %></td>
-			    <td><%= dto.getContent() %></td>
-			    <td><%= dto.getDate() %></td>
-			</tr>
-			<% 
-			    }
-			} else { 
-			%>
-			<tr>
-			    <td colspan="3">작성된 게시글이 없습니다.</td>
-			</tr>
-			<% 
-			} 
-			%>
+				<% 
+				List<BoardDTO> myPost = (List<BoardDTO>) request.getAttribute("myPosts");
+				
+				if (myPost != null && !myPost.isEmpty()) {
+				    int index = 1;
+				    for(BoardDTO dto : myPost) {
+				%>
+				<tr onclick="location.href='postDetailController?board_no=<%=dto.getBoard_no()%>'"
+				    style="cursor:pointer">
+				    <td><%= index++ %></td>
+				    <td><%= dto.getTitle() %></td>
+				    <td><%= dto.getDate() %></td>
+				</tr>
+				<% 
+				    }
+				} else { 
+				%>
+				<tr>
+				    <td colspan="3">작성된 게시글이 없습니다.</td>
+				</tr>
+				<% 
+				} 
+				%>
+			</table>
+		</div>
 
-
-
-
-
-		</table>
-
+		<button class="back-btn" onclick="history.back()">이전으로</button>
 	</div>
 </body>
+
 </html>

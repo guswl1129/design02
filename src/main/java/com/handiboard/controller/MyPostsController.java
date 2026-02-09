@@ -23,6 +23,7 @@ public class MyPostsController extends HttpServlet {
         MyPostsDAO dao = new MyPostsDAO();
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("userId");
+        
 
         if (id == null) {
             response.sendRedirect("login.jsp");
