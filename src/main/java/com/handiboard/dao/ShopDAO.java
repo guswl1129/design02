@@ -76,7 +76,7 @@ public class ShopDAO {
 			}
 
 			// item_no를 사용해서 shop_board에 저장
-			String sqlShop = "INSERT INTO shop_board(title, content, user_no, item_no) VALUES(?, ?, ?, ?)";
+			String sqlShop = "INSERT INTO shop_board(title, content, id, item_no) VALUES(?, ?, ?, ?)";
 			pstmtShop = conn.prepareStatement(sqlShop);
 			pstmtShop.setString(1, dto.getTitle()); // SQL문에 들어갈 데이터 (dto)
 			pstmtShop.setString(2, dto.getContent());
