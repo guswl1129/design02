@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page errorPage="myPosts.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,30 +62,28 @@ td {
 			</tr>
 
 			<% 
-		    List<BoardDTO> myPost = (List<BoardDTO>)request.getAttribute("myPosts");
-
-		    if (myPost != null) {
-		        int index = 1; // 번호를 매기기 위한 변수
-		        for(BoardDTO dto : myPost) { 
-		%>
-
+			List<BoardDTO> myPost = (List<BoardDTO>) request.getAttribute("myPosts");
+			
+			if (myPost != null && !myPost.isEmpty()) {
+			    int index = 1;
+			    for(BoardDTO dto : myPost) {
+			%>
 			<tr>
-
-				<td><%= index++ %></td>
-				<td><%= dto.getContent() %></td>
-				<td><%= dto.getDate() %></td>
+			    <td><%= index++ %></td>
+			    <td><%= dto.getContent() %></td>
+			    <td><%= dto.getDate() %></td>
 			</tr>
 			<% 
-		        } 
-		    } else { 
-		%>
+			    }
+			} else { 
+			%>
 			<tr>
-				<!-- colspan은 옆으로 칸을 합치는 속성을 말한다. -->
-				<td colspan="3">작성된 게시글이 없습니다.</td>
+			    <td colspan="3">작성된 게시글이 없습니다.</td>
 			</tr>
 			<% 
-		    } 
-		%>
+			} 
+			%>
+
 
 
 

@@ -42,7 +42,7 @@
 			<h3>나의 거래</h3>
 		</div>
 		<div class="category-content">
-			<a href="myPosts.jsp" class="menu-row"> <!-- 내 게시글 페이지로 이동하도록 수정 --> 
+			<a href="myPostsController" class="menu-row"> <!-- 내 게시글 페이지로 이동하도록 수정 --> 
                 <span class ="menu-row-content">내 게시글</span>
 				<span class="arrow-icon">></span>
 			</a>
