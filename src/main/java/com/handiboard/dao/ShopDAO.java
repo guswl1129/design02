@@ -108,6 +108,38 @@ public class ShopDAO {
 			}
 		}
 	}
+	
+	// 게시글 상세 조회 메서드 (상품 상세페이지) 
+	public ShopDTO getDetail(int shop_no) {
+		ShopDTO dto = null;
+		
+		// 작성자 아이디(Users), 아이템 정보(item) 를 조인해서 사용자에게 보여줍니다. 
+		String sql = "SELECT s.*, u.user_id, i.item_name, i.item_price, i.img_path " +
+					" FROM shop_board s " +
+					" JOIN Users u ON s.id = u.id " +
+					" JOIN item i ON s.item_no = i.item_no " +
+					" WHERE s.shop_no = ?";
+		
+		try (Connection conn = DBConnection.getInstance().getConn();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				) {
+			pstmt.setInt(1, shop_no);
+			try (ResultSet rs = pstmt.executeQuery()) { // 가져온 데이터를 dto에 저장
+				if (rs.next()) {
+					dto = new ShopDTO();
+					
+				}
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		
+		return dto;
+		
+		
+	}
+	
 }
 
 
