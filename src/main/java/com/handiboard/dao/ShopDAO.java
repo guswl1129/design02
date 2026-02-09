@@ -19,7 +19,7 @@ public class ShopDAO {
 		// shop_board와 Users, item 테이블을 JOIN해서 user_id, item_name, item_price 등을 가져옵니다.
 		String sql = "SELECT s.*, u.user_id AS writer_id, i.item_name, i.item_price, i.img_path " + 
 					" FROM shop_board s " +
-					" Join Users u ON s.user_no = u.id " +
+					" Join Users u ON s.id = u.id " +
 					" Join item i ON s.item_no = i.item_no " +
 					" ORDER BY s.shop_no DESC"; // 최신순 정렬 추가 
 
