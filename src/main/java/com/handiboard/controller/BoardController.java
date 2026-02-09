@@ -33,16 +33,23 @@ public class BoardController extends HttpServlet {
 		int pageSize=parseIntOrDefault(request.getParameter("pageSize"), 10);
 		// 페이징 객체 생성
 		PagingVO pVO=new PagingVO(page,pageSize);
-		// 페이지 단위 글 리스트 가져오기
-		List<BoardDTO>pList=dao.getPageList(pVO.getLimit(),pVO.getOffset());
-		int totalCount=dao.getAllCount();
 		
-		//데이터 첨부하기(board)
-		request.setAttribute("list", pList);	//이름, 값
+		// 검색어/타입 가져오기
+		String searchWord=(String)request.getParameter("searchWord");
+		String searchType=(String)request.getParameter("searchType");
+		
+		// 페이지 단위+검색 글 리스트 가져오기
+		List<BoardDTO>pList=dao.getSearchPageList(searchWord, searchType, pVO.getLimit(),pVO.getOffset());
+		int totalCount=dao.getAllSearchCount(searchWord, searchType);
 		
 		// 페이징 결과 객체 생성
 		PagingResult<BoardDTO> result=new PagingResult<BoardDTO>(pList, page, pageSize, totalCount, 5);	// 블록 크기 5
+		
+		//데이터 첨부하기(board)
+		request.setAttribute("list", pList);	//이름, 값
 		request.setAttribute("pagingResult", result); 
+		request.setAttribute("searchWord", searchWord);
+		request.setAttribute("searchType", searchType);
 		
 		// 보냄
 		RequestDispatcher rd=request.getRequestDispatcher("/mainBoard.jsp");

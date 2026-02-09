@@ -80,6 +80,120 @@ public class BoardDAO {
 		return list;
 	}
 	
+	// 글 개수 세기+검색
+	public int getAllSearchCount(String searchWord, String searchType) {
+		int board_count=0;
+		
+		// 검색어(조건o)
+		String searchQuery="";
+		if(searchWord!=null && !searchWord.isEmpty()) {
+			switch(searchType) {
+			case "title":
+				searchQuery=" AND board_title LIKE ?";
+				break;
+			case "content":
+				searchQuery=" AND board_content LIKE ?";
+				break;
+			case "user_id":
+				searchQuery=" AND user_id LIKE ?";
+				break;
+			case "all":
+				searchQuery=" AND (board_title LIKE ? OR board_content LIKE ? OR user_id LIKE ?)";
+				break;
+			}
+		}
+		
+		String sql="SELECT COUNT(*) AS count FROM board WHERE board_del=1"
+				+searchQuery;
+		try (Connection conn=DBConnection.getInstance().getConn();
+				PreparedStatement pstmt=conn.prepareStatement(sql);){
+			pstmt.setString(1, "%" + searchWord + "%");
+			// 검색어가 있을 때
+			if(searchWord!=null && !searchWord.isEmpty()) {
+				if("all".equals(searchType)) {
+					pstmt.setString(1, "%" + searchWord + "%");
+					pstmt.setString(2, "%" + searchWord + "%");
+					pstmt.setString(3, "%" + searchWord + "%");
+				} else
+				pstmt.setString(1, "%" + searchWord + "%");
+			}
+			
+			ResultSet rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				board_count=rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return board_count;
+	}
+	
+	// 페이지 단위로 글 리스트+검색
+	public List<BoardDTO> getSearchPageList(String searchWord, String searchType, int limit, int offset){
+		List<BoardDTO> list=new ArrayList<BoardDTO>();
+		
+		// 검색어(조건o)
+		String searchQuery="";
+		if(searchWord!=null && !searchWord.isEmpty()) {
+			switch(searchType) {
+			case "title":
+				searchQuery=" AND board_title LIKE ?";
+				break;
+			case "content":
+				searchQuery=" AND board_content LIKE ?";
+				break;
+			case "user_id":
+				searchQuery=" AND user_id LIKE ?";
+				break;
+			case "all":
+				searchQuery=" AND (board_title LIKE ? OR board_content LIKE ? OR user_id LIKE ?)";
+				break;
+			}
+		}
+		
+		String sql="SELECT * FROM board WHERE board_del=1"
+				+searchQuery
+				+" ORDER BY board_no DESC LIMIT ? OFFSET ?";
+		try (Connection conn=DBConnection.getInstance().getConn();
+				PreparedStatement pstmt=conn.prepareStatement(sql);){
+			
+			// 검색어가 있을 때
+			if(searchWord!=null && !searchWord.isEmpty()) {
+				if("all".equals(searchType)) {
+					pstmt.setString(1, "%" + searchWord + "%");
+					pstmt.setString(2, "%" + searchWord + "%");
+					pstmt.setString(3, "%" + searchWord + "%");
+					pstmt.setInt(4, limit);
+					pstmt.setInt(5, offset);
+				} else {
+				pstmt.setString(1, "%" + searchWord + "%");
+				pstmt.setInt(2, limit);
+				pstmt.setInt(3, offset);
+				}
+			} else {	// 없을 때
+				pstmt.setInt(1, limit);
+				pstmt.setInt(2, offset);
+			}
+			ResultSet rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardDTO dto=new BoardDTO();
+				dto.setBoard_no(rs.getInt("board_no"));
+				dto.setTitle(rs.getString("board_title"));
+				dto.setUser_id(rs.getString("user_id"));
+				dto.setView_count(rs.getInt("board_view"));
+				dto.setLike_count(rs.getInt("board_like"));
+				dto.setDate(rs.getString("board_date"));
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	// 글 하나 보기
 	public BoardDTO getBoard(int board_no) {
 		String sql="SELECT * FROM board WHERE board_no=?";
