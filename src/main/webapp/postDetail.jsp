@@ -49,6 +49,8 @@
 		<br>
 			<%=dto.getContent() %>
 		<br>
+		조회수 : <%=dto.getView_count() %>
+		<br>
 	</p>
 		<form action="./like" method="post">
             <input type="hidden" name="board_no" value="<%=dto.getBoard_no() %>"></input>

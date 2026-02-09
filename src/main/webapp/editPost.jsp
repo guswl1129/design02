@@ -25,7 +25,7 @@
 			<form action="./update" method="post">
 			    <input type="hidden" name="board_no" value="<%=dto.getBoard_no() %>">
 				<input type="text" name="title" value="<%=dto.getTitle() %>">
-				<textarea name="content" value=""><%=dto.getContent()%></textarea>
+				<textarea name="content"><%=dto.getContent()%></textarea>
 				<input type="hidden" name="user_id" value="<%=dto.getUser_id() %>">
 				<p>작성자: <%=dto.getUser_id() %></p>
 				<button type="submit">저장</button>
