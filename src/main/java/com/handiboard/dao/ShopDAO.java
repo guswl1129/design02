@@ -16,9 +16,12 @@ public class ShopDAO {
 	// 판매 게시판 리스트 조회
 	public List<ShopDTO> getList() {
 		List<ShopDTO> list = new ArrayList<>();
-		// shop_board와 item 테이블 JOIN -> 이름과 가격을 가져옵니다.
-		String sql = "SELECT s.*, i.item_name, i.item_price" + "FROM shop_board s"
-				+ " Join item i ON s.item_no = i.item_no ";
+		// shop_board와 Users, item 테이블을 JOIN해서 user_id, item_name, item_price 등을 가져옵니다.
+		String sql = "SELECT s.*, u.user_id AS writer_id, i.item_name, i.item_price, i.img_path " + 
+					" FROM shop_board s " +
+					" Join Users u ON s.user_no = u.id " +
+					" Join item i ON s.item_no = i.item_no " +
+					" ORDER BY s.shop_no DESC"; // 최신순 정렬 추가 
 
 		try (Connection conn = DBConnection.getInstance().getConn();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -29,12 +32,15 @@ public class ShopDAO {
 				dto.setShop_no(rs.getInt("shop_no")); // DTO 변수에 가져온 데이터를 저장
 				dto.setTitle(rs.getString("title"));
 				dto.setContent(rs.getString("content"));
-				dto.setUser_id(rs.getInt("user_id"));
+				
+				dto.setUser_id(rs.getString("writer_id"));
+				
 				dto.setReg_date(rs.getString("reg_date"));
-
 				dto.setItem_no(rs.getInt("item_no"));
 				dto.setItem_name(rs.getString("item_name"));
 				dto.setItem_price(rs.getInt("item_price"));
+				dto.setImg_path(rs.getString("img_path"));
+				
 				list.add(dto);
 			}
 
@@ -44,7 +50,8 @@ public class ShopDAO {
 		return list;
 	}
 
-	// 판매글 등록 (아이템 등록 후 판매글 등록 - 트랜잭션 적용)
+	// 판매글 등록 (아이템 등록 후 판매글 등록)
+	// (트랜잭션 + 부분 자동 반납)
 	public void createShop(ShopDTO dto) {
 		Connection conn = null;
 		PreparedStatement pstmtItem = null;
@@ -54,10 +61,11 @@ public class ShopDAO {
 			conn = DBConnection.getInstance().getConn();
 			conn.setAutoCommit(false); // 트랜잭션 시작
 			// item 테이블에 아이템정보(이름, 가격)를 먼저 저장
-			String sqlItem = "INSERT INTO item(item_name, item_price) VALUES(?, ?)";
+			String sqlItem = "INSERT INTO item(item_name, item_price, img_path) VALUES(?, ?, ?)"; // 수정
 			pstmtItem = conn.prepareStatement(sqlItem, Statement.RETURN_GENERATED_KEYS);
 			pstmtItem.setString(1, dto.getItem_name());
 			pstmtItem.setInt(2, dto.getItem_price());
+			pstmtItem.setString(3, dto.getImg_path());
 			pstmtItem.executeUpdate();
 
 			// 생성된 item_no 가져오기
@@ -68,12 +76,14 @@ public class ShopDAO {
 			}
 
 			// item_no를 사용해서 shop_board에 저장
-			String sqlShop = "INSERT INTO shop_board(title, content, user_id, item_no) VALUES(?, ?, ?, ?)";
+			String sqlShop = "INSERT INTO shop_board(title, content, user_no, item_no) VALUES(?, ?, ?, ?)";
 			pstmtShop = conn.prepareStatement(sqlShop);
 			pstmtShop.setString(1, dto.getTitle()); // SQL문에 들어갈 데이터 (dto)
 			pstmtShop.setString(2, dto.getContent());
-			pstmtShop.setInt(3, dto.getUser_id());
-			pstmtShop.setInt(4, dto.getItem_no());
+			pstmtShop.setInt(3, dto.getUser_no()); // 숫자로 된 id(회원번호)
+			pstmtShop.setInt(4, generatedItemNo);
+			
+			pstmtShop.executeUpdate();
 
 			conn.commit(); // 트랜잭션: 확정
 		} catch (Exception e) {
@@ -83,8 +93,21 @@ public class ShopDAO {
 			} catch (SQLException se) {
 				se.printStackTrace();
 			}
-		} 
-
+		} finally {
+			try {
+				// 역순으로 닫기 (아이템용 -> 게시판용 -> 커넥션) 
+				if (pstmtItem != null) pstmtItem.close();
+				if (pstmtShop != null) pstmtShop.close();
+				if (conn != null) {
+					conn.setAutoCommit(true); // 다음 사람을 위해 기본값 복구
+					conn.close();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
-
 }
+
+

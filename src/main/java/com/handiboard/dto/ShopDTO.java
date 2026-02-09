@@ -6,10 +6,10 @@ import lombok.Setter;
 @Setter
 public class ShopDTO {
 	// shop_board 테이블 
-	private int shop_no; // 판매 게시판 글 번호
+	private int shop_no, user_no; // shop_board의 shop_no, Users의 id
 	private String title;
 	private String content;
-	private int user_id;
+	private String user_id;
 	private String reg_date;
 
 	// 외래키 및 Join 데이터 
@@ -17,4 +17,5 @@ public class ShopDTO {
 	private int item_no;
 	private String item_name;
 	private int item_price; 
+	private String img_path;
 }
