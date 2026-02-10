@@ -1,6 +1,5 @@
 package com.handiboard.dto;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -10,9 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BoardDTO {
-	private int board_no, view_count, like_count;
+	private int board_no, view_count, like_count, board_del;
 	private String title, name, content, user_id;
-	private String date;
+	private String date,updated_date;
 
 	//상대적 시간을 반환하는 메서드 추가
 	public String getRelativeDate() {

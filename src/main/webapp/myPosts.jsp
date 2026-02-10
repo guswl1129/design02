@@ -2,7 +2,6 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page errorPage="myPosts.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +19,6 @@ body {
 	position: relative;
 	display: inline-block;
 }
-
 
 table {
 	border: 2px solid black;
@@ -53,10 +51,17 @@ td {
 	right: 0;
 	bottom: -40px; /* 테두리 바로 아래 */
 }
-
 </style>
 </head>
 <body>
+	<%
+	String userId = (String) session.getAttribute("userId");
+	if (userId == null) {
+		response.sendRedirect("login.jsp");
+		return;
+	}
+	%>
+
 	<div class="wrap-container">
 		<div class="wrap">
 			<table>
@@ -74,18 +79,19 @@ td {
 				    int index = 1;
 				    for(BoardDTO dto : myPost) {
 				%>
-				<tr onclick="location.href='postDetailController?board_no=<%=dto.getBoard_no()%>'"
-				    style="cursor:pointer">
-				    <td><%= index++ %></td>
-				    <td><%= dto.getTitle() %></td>
-				    <td><%= dto.getDate() %></td>
+				<tr
+					onclick="location.href='postDetailController?board_no=<%=dto.getBoard_no()%>'"
+					style="cursor: pointer">
+					<td><%= index++ %></td>
+					<td><%= dto.getTitle() %></td>
+					<td><%= dto.getDate() %></td>
 				</tr>
 				<% 
 				    }
 				} else { 
 				%>
 				<tr>
-				    <td colspan="3">작성된 게시글이 없습니다.</td>
+					<td colspan="3">작성된 게시글이 없습니다.</td>
 				</tr>
 				<% 
 				} 
@@ -93,7 +99,7 @@ td {
 			</table>
 		</div>
 
-		<button class="back-btn" onclick="history.back()">이전으로</button>
+		<button class="back-btn" onclick="location.href='myPage'">이전으로</button>
 	</div>
 </body>
 

@@ -31,7 +31,7 @@
                 <span id="point-balance"><%=user.getPoint()%>타래</span>
 		</div>
 		<div class="category-content">
-			<a href="addMoney.jsp" class="menu-row">
+			<a href="addPoint.jsp" class="menu-row">
                 <span class ="menu-row-content">충전</span>
                 <span class="arrow-icon">></span>
 			</a>

@@ -31,6 +31,7 @@ public class LoginDAO {
 					dto.setCount(rs.getInt("count")); // 1
 					dto.setName(rs.getString("user_nickname")); // user의 닉네임을 저장한다.
 					dto.setPoint(rs.getInt("user_point"));
+					dto.setId(rs.getString("user_id"));
 				}
 
 			}

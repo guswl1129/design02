@@ -35,13 +35,18 @@ public class PostDetailController extends HttpServlet {
 	            throws ServletException, IOException {
 
 	        int boardNo = Integer.parseInt(request.getParameter("board_no"));
-
+	        String mode = request.getParameter("mode");
 	        MyPostsDAO dao = new MyPostsDAO();
 	        BoardDTO dto = dao.LoadDetailPosts(boardNo);
 
 	        request.setAttribute("details", dto);
-	        RequestDispatcher rd = request.getRequestDispatcher("/postDetail2.jsp");
-	        rd.forward(request, response);
+	        if ("edit".equals(mode)) {
+	            RequestDispatcher rd = request.getRequestDispatcher("/myEditPost.jsp");
+	            rd.forward(request, response);
+	        } else {
+	            RequestDispatcher rd = request.getRequestDispatcher("/myPostDetail.jsp");
+	            rd.forward(request, response);
+	        }
 	    }
 
 	    protected void doPost(HttpServletRequest request, HttpServletResponse response)

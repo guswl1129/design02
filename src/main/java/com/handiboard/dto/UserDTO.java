@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class UserDTO {
 	private String id,pw,name,email;
-	private int count,point;
+	private int count,point,user_no;
 	
 }

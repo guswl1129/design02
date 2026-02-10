@@ -100,7 +100,7 @@
 <body>
 <div class="wrap">
     <div class="header">
-        <h1>ㅤㅤㅤㅤㅤ타래 충전ㅤㅤㅤㅤ<a href="board.jsp">X</a></h1>
+        <h1>ㅤㅤㅤㅤㅤ타래 충전ㅤㅤㅤㅤ<a href="myPage">X</a></h1>
         
     </div>
 	

@@ -50,7 +50,8 @@ public class LoginController extends HttpServlet {
 			request.setAttribute("nickname", dto.getName());
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("userId", id); // 로그인한 유저의 아이디를 세션에 저장
+			session.setAttribute("user", dto);
+			session.setAttribute("userId", dto.getId()); // 로그인한 유저의 아이디를 세션에 저장
 			session.setAttribute("userPoint", dto.getPoint()); // 로그인한 유저의 포인트를 세션에 저장
 
 			RequestDispatcher rd = request.getRequestDispatcher("loginAction.jsp");
