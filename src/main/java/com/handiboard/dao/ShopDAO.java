@@ -114,7 +114,7 @@ public class ShopDAO {
 		ShopDTO dto = null;
 		
 		// 작성자 아이디(Users), 아이템 정보(item) 를 조인해서 사용자에게 보여줍니다. 
-		String sql = "SELECT s.*, u.user_id, i.item_name, i.item_price, i.img_path " +
+		String sql = "SELECT s.*, u.user_id, i.item_name, i.item_price, i.img_path, i.item_no " +
 					" FROM shop_board s " +
 					" JOIN Users u ON s.id = u.id " +
 					" JOIN item i ON s.item_no = i.item_no " +
@@ -130,6 +130,7 @@ public class ShopDAO {
 					dto.setShop_no(rs.getInt("shop_no"));
 	                dto.setTitle(rs.getString("title"));
 	                dto.setContent(rs.getString("content"));
+	                dto.setItem_no(rs.getInt("item_no"));
 	                dto.setItem_name(rs.getString("item_name"));
 	                dto.setItem_price(rs.getInt("item_price"));
 	                dto.setImg_path(rs.getString("img_path"));

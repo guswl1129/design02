@@ -16,7 +16,7 @@ public class LoginDAO {
 	public UserDTO login(UserDTO dto) {
 
 		// 특정 사용자의 id(중복x)를 이용해 갯수, 닉네임, 비밀번호를 찾는다.
-		String sql = "SELECT count(*) as count, user_nickname, user_password, user_point FROM Users WHERE user_id=? ";
+		String sql = "SELECT count(*) as count, user_id, user_nickname, user_password, user_point FROM Users WHERE user_id=? ";
 		try (Connection conn = DBConnection.getInstance().getConn();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setString(1, dto.getId()); // 아이디를 읽어온다.
@@ -37,6 +37,7 @@ public class LoginDAO {
 			}
 			rs.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return dto;
 	}
