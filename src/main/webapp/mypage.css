@@ -9,7 +9,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 은은한 그림자 효과 */
 }
 /*프로필 이미지 크기 조정 코드 */
-#user_avator {
+#user_avatar {
     width: 44px;           /* 너비 고정 */
     height: 44px;          /* 높이 고정 (정사각형) */
     object-fit: cover;     /* 이미지가 찌그러지지 않게 비율 유지하며 채움 */

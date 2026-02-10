@@ -53,7 +53,9 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("user", dto);
 			session.setAttribute("userId", dto.getId()); // 로그인한 유저의 아이디를 세션에 저장
 			session.setAttribute("userPoint", dto.getPoint()); // 로그인한 유저의 포인트를 세션에 저장
-
+			session.setAttribute("userEmail", dto.getEmail());
+			session.setAttribute("userName", dto.getName());
+			
 			RequestDispatcher rd = request.getRequestDispatcher("loginAction.jsp");
 			rd.forward(request, response);
 		} else {
