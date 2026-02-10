@@ -127,12 +127,19 @@ public class ShopDAO {
 			try (ResultSet rs = pstmt.executeQuery()) { // 가져온 데이터를 dto에 저장
 				if (rs.next()) {
 					dto = new ShopDTO();
-					
+					dto.setShop_no(rs.getInt("shop_no"));
+	                dto.setTitle(rs.getString("title"));
+	                dto.setContent(rs.getString("content"));
+	                dto.setItem_name(rs.getString("item_name"));
+	                dto.setItem_price(rs.getInt("item_price"));
+	                dto.setImg_path(rs.getString("img_path"));
+	                dto.setUser_id(rs.getString("user_id"));
+	                dto.setReg_date(rs.getString("reg_date"));
 				}
 			}
 			
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		return dto;

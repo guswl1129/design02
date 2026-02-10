@@ -49,6 +49,16 @@ public class ShopController extends HttpServlet {
 			insert(request, response);
 			
 			// 파라미터 받아서 dao.createShop(dto) 호출! 	 
+		} else if (command.equals("/shop/detail.do")) {
+			int shop_no =  Integer.parseInt(request.getParameter("shop_no"));
+			ShopDTO dto = dao.getDetail(shop_no);
+			
+			if (dto != null) {
+				request.setAttribute("shop", dto);
+				request.getRequestDispatcher("/views/shop/detail.jsp").forward(request, response);
+			} else {
+				response.sendRedirect("list.do"); // 정보가 없으면 목록으로 돌아가기
+			}
 		}
 		
 	}
