@@ -7,58 +7,92 @@ import com.handiboard.dto.OrderDTO;
 import com.handiboard.util.DBConnection;
 
 public class BuyDAO {
-	// 주문 처리 (트랜잭션 적용)
-	public boolean processOrder(OrderDTO order, int totalPrice) {
+	
+	/**
+    * 통합 구매 처리 (트랜잭션)
+    * @param buyerId  구매자 ID
+    * @param shopNos  구매할 게시글 번호 배열
+    * @param itemNos  구매할 아이템 번호 배열
+    * @param totalPrice 총 결제 금액
+    */
+	public boolean executePurchase(String buyerId, String[] shopNos, String[] itemNos, int totalPrice) {
 		Connection conn = null;
-		PreparedStatement pstmtUser = null;
-		PreparedStatement pstmtOrder = null;
-		boolean isSuccess = false;
+        PreparedStatement pstmtBuyer = null;
+        PreparedStatement pstmtSeller = null;
+        PreparedStatement pstmtOrder = null;
+        boolean isSuccess = false;
+        
+        try {
+        	conn = DBConnection.getInstance().getConn();
+            conn.setAutoCommit(false); //트랜잭션 시작
+            
+            // 구매자 포인트 차감
+            String sqlBuyer = "UPDATE Users SET user_point = user_point - ? WHERE id =? AND user_point >= ?";
+            pstmtBuyer = conn.prepareStatement(sqlBuyer);
+            pstmtBuyer.setInt(1, totalPrice);
+            pstmtBuyer.setString(2, buyerId);
+            pstmtBuyer.setInt(3, totalPrice); // 포인트 부족 방지 체크
+            
+            int buyerResult = pstmtBuyer.executeUpdate();
+            
+            if (buyerResult > 0) {
+            	// 판매자 수익 증가 및 주문 기록 저장
+            	String sqlSeller = "UPDATE Users SET user_point = user_point + (SELECT item_price FROM items WHERE item_no = ?) "
+                        + "WHERE id = (SELECT user_id FROM shop_board WHERE shop_no = ?)";
+            	
+            	String sqlOrder = "INSERT INTO Orders (buyer_id, shop_no, item_no, status, order_date) "
+                        + "VALUES (?, ?, ?, 1, NOW())";
+            	
+            	pstmtSeller = conn.prepareStatement(sqlSeller);
+                pstmtOrder = conn.prepareStatement(sqlOrder);
+                
+                for (int i = 0; i < shopNos.length; i++) {
+                    int sNo = Integer.parseInt(shopNos[i]);
+                    int iNo = Integer.parseInt(itemNos[i]);
 
-		try {
-			conn = DBConnection.getInstance().getConn();
-			conn.setAutoCommit(false); // 1. 트랜잭션 시작
+                    // 판매자 수익 증가 세팅
+                    pstmtSeller.setInt(1, iNo);
+                    pstmtSeller.setInt(2, sNo);
+                    pstmtSeller.addBatch(); // 여러 개일 경우 성능을 위해 배치 사용
 
-			// [작업 A] 유저 포인트 차감
-			String sqlUser = "UPDATE Users SET point = point - ? WHERE id = ? AND point >= ?";
-			pstmtUser = conn.prepareStatement(sqlUser);
-			pstmtUser.setInt(1, totalPrice);
-			pstmtUser.setString(2, order.getBuyer_id());
-			pstmtUser.setInt(3, totalPrice); // 잔액 부족 체크
-
-			int userResult = pstmtUser.executeUpdate();
-
-			if (userResult > 0) {
-				// [작업 B] Orders 테이블에 구매 기록 추가 (status=1: 구매완료)
-				String sqlOrder = "INSERT INTO Orders (buyer_id, shop_no, item_no, status, order_date) "
-						+ "VALUES (?, ?, ?, 1, NOW())";
-				pstmtOrder = conn.prepareStatement(sqlOrder);
-				pstmtOrder.setString(1, order.getBuyer_id());
-				pstmtOrder.setInt(2, order.getShop_no());
-				pstmtOrder.setInt(3, order.getItem_no());
-
-				int orderResult = pstmtOrder.executeUpdate();
-
-				if (orderResult > 0) {
-					conn.commit(); // 2. 모든 작업 성공 시 확정
-					isSuccess = true;
-				} else {
-					conn.rollback(); // 주문 실패 시 되돌림
-				}
-			} else {
-				conn.rollback(); // 포인트 부족 시 되돌림
-			}
-
-		} catch (Exception e) {
-			try {
-				if (conn != null)
-					conn.rollback();
-			} catch (Exception ex) {
-			}
-			e.printStackTrace();
-		} finally {
-			// 자원 반납 (close)
+                    // 주문 기록 삽입 세팅
+                    pstmtOrder.setString(1, buyerId);
+                    pstmtOrder.setInt(2, sNo);
+                    pstmtOrder.setInt(3, iNo);
+                    pstmtOrder.addBatch();
+                }
+                
+            	// 배치 실행
+                int[] sellerResults = pstmtSeller.executeBatch();
+                int[] orderResults = pstmtOrder.executeBatch();
+                
+                // 모든 처리가 배열 길이만큼 정상 수행되었는지 확인
+                if (sellerResults.length == shopNos.length && orderResults.length == shopNos.length) {
+                    conn.commit(); // 2. 모든 작업 성공 시 최종 확정
+                    isSuccess = true;
+                } else {
+                    conn.rollback();
+                }
+            } else {
+                conn.rollback(); // 구매자 포인트 부족 시 롤백
+            }
+        } catch (Exception e) {
+        	try { if (conn != null) conn.rollback(); } catch (Exception ex) {}
+            e.printStackTrace();
+        } finally {
+        	// 자원 반납 (close) - 팀장님 프로젝트의 Close 메서드 호출
+            closeAll(pstmtBuyer, pstmtSeller, pstmtOrder, conn);
 		}
+		
+		
 		return isSuccess;
 	}
-
+	
+	// 자원 반납용 헬퍼 메서드
+    private void closeAll(AutoCloseable... resources) {
+        for (AutoCloseable res : resources) {
+            if (res != null) try { res.close(); } catch (Exception e) {}
+        }
+    }
 }
+
