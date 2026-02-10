@@ -28,19 +28,20 @@ public class BuyDAO {
             conn.setAutoCommit(false); //트랜잭션 시작
             
             // 구매자 포인트 차감
-            String sqlBuyer = "UPDATE Users SET user_point = user_point - ? WHERE id =? AND user_point >= ?";
+            String sqlBuyer = "UPDATE Users SET user_point = user_point - ? WHERE user_id =? AND user_point >= ?";
             pstmtBuyer = conn.prepareStatement(sqlBuyer);
             pstmtBuyer.setInt(1, totalPrice);
             pstmtBuyer.setString(2, buyerId);
             pstmtBuyer.setInt(3, totalPrice); // 포인트 부족 방지 체크
             
             int buyerResult = pstmtBuyer.executeUpdate();
+            System.out.println("구매자 포인트 차감 결과 (행 수): " + buyerResult); // 이게 0이면 실패입니다.
             
             if (buyerResult > 0) {
-            	// 판매자 수익 증가 및 주문 기록 저장
-            	String sqlSeller = "UPDATE Users SET user_point = user_point + (SELECT item_price FROM items WHERE item_no = ?) "
-                        + "WHERE id = (SELECT user_id FROM shop_board WHERE shop_no = ?)";
-            	
+            	// 판매자 수익 증가
+            	String sqlSeller = "UPDATE Users SET user_point = user_point + (SELECT item_price FROM item WHERE item_no = ?) "
+                        + "WHERE user_id = (SELECT user_id FROM shop_board WHERE shop_no = ?)";
+            	// 주문 기록 저장
             	String sqlOrder = "INSERT INTO Orders (buyer_id, shop_no, item_no, status, order_date) "
                         + "VALUES (?, ?, ?, 1, NOW())";
             	

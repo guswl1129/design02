@@ -40,9 +40,9 @@ public class BuyController extends HttpServlet {
 			// JSP에서 쓸 수 있도록 request에 담기
 			request.setAttribute("userPoint", userPoint);
 			
-			System.out.println("userPoint 조회 성공--------------------");
+			System.out.println("userPoint 조회 시도--------------------");
 			System.out.println("userId : " + userId);
-			System.out.println(userPoint);
+			System.out.println("userId : " + userPoint);
 			
 			
 			// 파라미터를 배열로 받습니다.
