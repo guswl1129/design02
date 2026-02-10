@@ -30,6 +30,21 @@ public class BuyController extends HttpServlet {
 		
 		// 결제 페이지 진입 (바로구매/장바구니 통합)
 		if (command.equals("/buy/buy.do")) {
+			// 세션에서 로그인한 유저 ID 가져오기
+			String userId = (String)request.getSession().getAttribute("userId");
+			
+			// BuyDAO 객체 생성
+			BuyDAO buyDao = new BuyDAO();
+			// DB에서 최신 포인트 조회
+			int userPoint = buyDao.getPoint(userId);
+			// JSP에서 쓸 수 있도록 request에 담기
+			request.setAttribute("userPoint", userPoint);
+			
+			System.out.println("userPoint 조회 성공--------------------");
+			System.out.println("userId : " + userId);
+			System.out.println(userPoint);
+			
+			
 			// 파라미터를 배열로 받습니다.
 			String[] shopNoArray = request.getParameterValues("shop_no");
 			
@@ -49,7 +64,9 @@ public class BuyController extends HttpServlet {
                         order.setItem_name(shop.getItem_name());
                         order.setItem_price(shop.getItem_price());
                         order.setImg_path(shop.getImg_path());
-                        order.setSeller_name(shop.getUser_id()); // 판매자 ID 보관용
+                        
+                        order.setSeller_id(shop.getUser_no());   // Shop의 글쓴이가 Order의 판매자가 됨
+                        order.setSeller_name(shop.getUser_id()); // Shop의 작성자ID가 Order의 판매자이름이 됨
                         
                         buyList.add(order);
                         totalPrice += shop.getItem_price(); // 총액 누적

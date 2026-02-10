@@ -2,6 +2,7 @@ package com.handiboard.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import com.handiboard.dto.OrderDTO;
 import com.handiboard.util.DBConnection;
@@ -93,6 +94,30 @@ public class BuyDAO {
         for (AutoCloseable res : resources) {
             if (res != null) try { res.close(); } catch (Exception e) {}
         }
+    }
+    
+    // 사용자 포인트 조회 메서드
+    public int getPoint(String userId) {
+    	Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int point = 0;
+        
+        try {
+        	conn = DBConnection.getInstance().getConn();
+        	String sql = "SELECT user_point FROM Users WHERE user_id = ?";
+        	pstmt = conn.prepareStatement(sql);
+        	pstmt.setString(1, userId);
+        	rs = pstmt.executeQuery();
+        	
+        	if (rs.next()) {
+        		point = rs.getInt("user_point");
+        	}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return point;
     }
 }
 

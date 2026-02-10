@@ -11,10 +11,9 @@
 	Object totalPriceObj = request.getAttribute("totalPrice");
 	int totalPrice = (totalPriceObj != null) ? (int)totalPriceObj : 0;
 	
-	// [보완] 세션에서 로그인한 유저의 현재 포인트를 가져온다고 가정
-    // 나중에 Header나 Controller에서 세션에 담아준 값을 사용하세요.
-    Integer userPoint = (Integer)session.getAttribute("userPoint");
-    if(userPoint == null) userPoint = 0; // 테스트용
+	// Controller에서 보낸 포인트를 꺼냅니다.
+    Object upObj = request.getAttribute("userPoint");
+    int userPoint = (upObj != null) ? (int)upObj : 0;
 %>
     
     
