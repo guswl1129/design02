@@ -59,7 +59,7 @@
 	    function directBuy(shopNo) {
 	        if(confirm("장바구니를 거치지 않고 바로 구매하시겠습니까?")) {
 	            // 바로 결제 폼으로 이동 (shop_no를 들고 감)
-	            location.href = "buy.do?shop_no=" + shopNo;
+	            location.href = "<%=request.getContextPath()%>/buy/buy.do?shop_no=" + shopNo;
 	        }
 	    }
 	
@@ -68,7 +68,7 @@
 	        if(confirm("이 상품을 장바구니에 담으시겠습니까?")) {
 	            // 장바구니 담기 처리 서블릿으로 이동
 	            // 처리 후 서블릿에서 cartList.do로 보내주거나, 여기서 선택하게 함
-	            location.href = "addCart.do?shop_no=" + shopNo;
+	            location.href = "<%=request.getContextPath()%>/cart/addCart.do?shop_no=" + shopNo;
 	        }
 	    }
 	</script>
