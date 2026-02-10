@@ -94,9 +94,9 @@ public class InCartController extends HttpServlet {
 	            result = orderDAO.toggleInCart(userId, shopNo, itemNo);
 	            if (result == 1) {
 	                // 성공적으로 해제됨: 장바구니 목록으로 다시 이동
-	                response.sendRedirect("cartList.jsp?msg=remove_success");
+	                response.sendRedirect(request.getContextPath() + "/CartList?msg=remove_success");
 	            } else {
-	                handleError(response, result, "cartList.jsp");
+	                handleError(response, result, request.getContextPath() + "/CartList");
 	            }
 	        }
 	    }

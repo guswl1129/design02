@@ -71,7 +71,7 @@
 			</a>
 		</div>
 		<div class="category-content">
-			<a href="/editProfile" class="menu-row"> 
+			<a href="${pageContext.request.contextPath}/CartList" class="menu-row"> 
                 <span class ="menu-row-content">장바구니</span>
 				<span class="arrow-icon">></span>
 			</a>
