@@ -18,14 +18,14 @@
         </div>
         <div class="user-info">
 	    <%
-	        // 세션에서 userId를 가져옵니다.
-	        String sUserId = (String)session.getAttribute("userId");
+	        // 세션에서 userName을 가져옵니다.
+	        String sUserName = (String)session.getAttribute("userName");
 	        
 	        // 로그인 상태에 따라 다른 화면을 보여줍니다.
-	        if (sUserId != null) { 
+	        if (sUserName != null) { 
 	    %>
-	        <span class="welcome-msg"><b><%= sUserId %></b>님 환영합니다!</span>
-	        <a href="logout" class="auth-link">로그아웃</a>
+	        <span class="welcome-msg"><b><%= sUserName %></b>님 환영합니다!</span>
+	        <a href="logout" class="logout">로그아웃</a>
 	    <%
 	        } else { 
 	    %>
