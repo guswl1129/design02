@@ -28,7 +28,7 @@
 
             <div class="item-card only-img">
                 <div class="card-img-box">
-                    <img src="${pageContext.request.contextPath}/resources/images/image05.jpg" alt="도안 3">
+                    <img src="${pageContext.request.contextPath}/resources/images/warmer.jpg" alt="도안 3">
                 </div>
             </div>
             
