@@ -41,9 +41,24 @@
 	<div class="market-section">
         <div class="section-title">✨ 지금 인기있는 도안</div>
         <div class="card-container">
-            <div class="dummy-card">도안 이미지/정보 준비 중</div>
-            <div class="dummy-card">도안 이미지/정보 준비 중</div>
-            <div class="dummy-card">도안 이미지/정보 준비 중</div>
+        	<div class="item-card only-img">
+                <div class="card-img-box">
+                    <img src="${pageContext.request.contextPath}/resources/images/image01.jpg" alt="도안 1">
+                </div>
+            </div>
+
+            <div class="item-card only-img">
+                <div class="card-img-box">
+                    <img src="${pageContext.request.contextPath}/resources/images/image04.jpg" alt="도안 2">
+                </div>
+            </div>
+
+            <div class="item-card only-img">
+                <div class="card-img-box">
+                    <img src="${pageContext.request.contextPath}/resources/images/image05.jpg" alt="도안 3">
+                </div>
+            </div>
+            
         </div>
     </div>
 
