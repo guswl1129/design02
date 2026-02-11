@@ -20,6 +20,10 @@
 	String searchType=(String)request.getAttribute("searchType");
 	HttpSession sessions=request.getSession();
 	%>
+	
+	<%-- 상단 네비게이션 바 불러오기 --%>
+	<%@ include file="/nav.jsp" %>
+	
 	<h1>커뮤니티 게시판</h1>
 	
 	<div class=rightButton>

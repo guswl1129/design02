@@ -87,10 +87,10 @@
 <body>
 	<div class="success-box">
     <h2>🎉 결제가 정상적으로 완료되었습니다!</h2>
-    <p>구매하신 도안은 마이페이지 > 내 보관함에서 확인하실 수 있습니다.</p>
+    <p>구매하신 도안은 <b>마이페이지 > 구매내역</b>에서<br>언제든지 확인하실 수 있습니다.</p>
     <div class="btns">
-        <button onclick="location.href='${pageContext.request.contextPath}/shop/list.do'">계속 쇼핑하기</button>
-        <button onclick="location.href='${pageContext.request.contextPath}/main'">메인페이지로 이동</button>
+        <button class="btn-shop" onclick="location.href='${pageContext.request.contextPath}/shop/list.do'">계속 쇼핑하기</button>
+        <button class="btn-shop" onclick="location.href='${pageContext.request.contextPath}/main'">메인페이지로 이동</button>
     </div>
 </div>
 </body>
