@@ -7,10 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Update</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/editPost.css">
 </head>
 <body>
-	<h1>update</h1>
-		
 		<%
 		BoardDTO dto=(BoardDTO)request.getAttribute("dto");
 		if (dto==null){
@@ -21,15 +20,29 @@
 		} else{
 		%>
 			<!-- 글쓰기 화면: get/ db에 글쓰기: post -->
-			<button style="align-self: right" onclick="location.href='./board'">리스트로 돌아가기</button>
-			<form action="./update" method="post">
-			    <input type="hidden" name="board_no" value="<%=dto.getBoard_no() %>">
-				<input type="text" name="title" value="<%=dto.getTitle() %>">
-				<textarea name="content"><%=dto.getContent()%></textarea>
-				<input type="hidden" name="user_id" value="<%=dto.getUser_id() %>">
-				<p>작성자: <%=dto.getUser_id() %></p>
-				<button type="submit">저장</button>
-			</form>
+		
+<section class="update-section">
+
+	<div class="right-btn">
+				<button class="back-btn" onclick="location.href='./board'">리스트로 돌아가기</button>
+	</div>
+	<br>
+	<br>
+	<form class="update-form" action="./update" method="post">
+		<div class="writer">작성자: <%=dto.getUser_id() %></div>
+	    <input type="hidden" name="board_no" value="<%=dto.getBoard_no() %>">
+		<input class="update-title" type="text" name="title" value="<%=dto.getTitle() %>">
+		<br>
+		<textarea class="update-content" name="content"><%=dto.getContent()%></textarea>
+		<br>
+		<input type="hidden" name="user_id" value="<%=dto.getUser_id() %>">
+		<div class="right-btn">
+			<button class="submit-btn" type="submit">저장</button>
+		</div>
+	</form>
+
+</section>
+			
 		<%
 		}
 		%>

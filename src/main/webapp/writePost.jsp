@@ -6,11 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/community.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/writePost.css">
 </head>
 <body>
 
-	<h1>write</h1>
 	<!-- 글쓰기 화면: get/ db에 글쓰기: post -->
 	
 	<%
@@ -20,20 +19,20 @@
 	
 <section class="write-section">
 
-	<div class="rightButton">
-		<button class="back" onclick="history.back()">리스트로 돌아가기</button>
+	<div class="right-btn">
+		<button class="back-btn" onclick="history.back()">리스트로 돌아가기</button>
 	</div>
 	<br>
     <br>
-	<p>작성자 : <%=userId %></p>
-	<form action="./write" method="post" class="write-from">
-		<input type="text" name="title" placeholder="제목을 입력하세요" class="write-title">
+	<form class="write-form" action="./write" method="post">
+		<div class="writer">작성자 : <%=userId %></div>
+		<input class="write-title" type="text" name="title" placeholder="제목을 입력하세요">
 		<br>
-		<textarea name="content" placeholder="내용을 입력하세요" class="write-content"></textarea>
+		<textarea class="write-content" name="content" placeholder="내용을 입력하세요"></textarea>
 		<br>
 		<input type="hidden" name="userId" value="<%=userId %>"></input>
-		<div class="rightButton">
-			<button type="submit">저장</button>
+		<div class="right-btn">
+			<button class="submit-btn" type="submit">저장</button>
 		</div>
 	</form>
 

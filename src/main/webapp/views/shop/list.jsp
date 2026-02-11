@@ -8,15 +8,13 @@
 <head>
 <meta charset="UTF-8">
 <title>도안 판매 목록</title>
-<style>
-    .shop-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    .shop-table th, .shop-table td { border: 1px solid #ddd; padding: 12px; text-align: center; }
-    .shop-table th { background-color: #f4f4f4; }
-    .price { color: #e74c3c; font-weight: bold; }
-</style>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/list.css">
+
 </head>
 <body>
-
+	<%-- 상단 네비게이션 바 불러오기 --%>
+	<%@ include file="/nav.jsp" %>
+	
 	<h2>도안 판매 목록</h2>
 
 	<table class="shop-table">

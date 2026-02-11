@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/community.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/mainBoard.css">
 <title>Insert title here</title>
 </head>
 <body>
@@ -20,10 +20,12 @@
 	String searchType=(String)request.getAttribute("searchType");
 	HttpSession sessions=request.getSession();
 	%>
-	<h1>커뮤니티 게시판</h1>
 	
-	<div class=rightButton>
-		<form action="./board" method="get" style="display: inline;">
+	<%-- 상단 네비게이션 바 불러오기 --%>
+	<%@ include file="/nav.jsp" %>
+	
+	<div class=right-btn>
+		<form class="search-type" action="./board" method="get">
 		    <select name="searchType" id="searchType">
                 <option value="title">제목</option>
                 <option value="content">내용</option>
@@ -31,13 +33,13 @@
                 <option value="all">전체</option>
             </select>
 			<input type="text" id="searchWord" name="searchWord" placeholder="검색어 입력">
-			<input type="submit" value="검색">
+			<input class="search-btn" type="submit" value="검색">
 		</form>
-		<button type="button" onclick="location.href='./write'">글쓰기</button>
+		<button class="write-btn" type="button" onclick="location.href='./write'">글쓰기</button>
 	</div>
 	<br>
 	<table class="board-table">
-		<tr class="board-tr">
+		<tr class="board-header">
 			<th>번호</th>
 			<th>제목</th>
 			<th>글쓴이</th>
@@ -50,10 +52,10 @@
 		for(BoardDTO dto : list)
 		{
 		%>
-		<tr>
+		<tr class="board-content">
 			<td><%=dto.getBoard_no() %></td>
 			<td>
-				<a href="./detail?board_no=<%=dto.getBoard_no() %>">
+				<a class="board-title" href="./detail?board_no=<%=dto.getBoard_no() %>">
 					<%=dto.getTitle() %>
 				</a>
 			</td>
@@ -69,32 +71,36 @@
 	<br>
 	<!-- page -->
 	<!-- 검색어x -->
-	<%	if(searchWord==null || searchWord.equals("")) { %>
-		<div align="center">
+	<div class="paging-parent">
+	
+		<%	if(searchWord==null || searchWord.equals("")) { %>
+		<div class="paging">
 			<%	if(pageResult.isHasPrevious())  {%>
-				<a href="./board?page=<%=pageResult.getStartPage()-1%>&pageSize=<%=pageResult.getPageSize()%>">이전</a>
+				<a class="paging-link" href="./board?page=<%=pageResult.getStartPage()-1%>&pageSize=<%=pageResult.getPageSize()%>">이전</a>
 			<%  }%>
 			<%for(int i=pageResult.getStartPage(); i<=pageResult.getEndPage(); i++)  {	%>
-				<a href="./board?page=<%=i %>&pageSize=<%=pageResult.getPageSize()%>"><%=i %></a>
+				<a class="paging-link" href="./board?page=<%=i %>&pageSize=<%=pageResult.getPageSize()%>"><%=i %></a>
 			<%	}%>
 			<%	if(pageResult.isHasNext()) {%>
-				<a href="./board?page=<%=pageResult.getEndPage()+1%>&pageSize=<%=pageResult.getPageSize()%>">이후</a>
+				<a class="paging-link" href="./board?page=<%=pageResult.getEndPage()+1%>&pageSize=<%=pageResult.getPageSize()%>">이후</a>
 			<%	}%>
 		</div>
 	<%	} else {%>
 	<!-- 검색어o -->
-		<div align="center">
+		<div class="paging">
 			<%	if(pageResult.isHasPrevious())  {%>
-				<a href="./board?page=<%=pageResult.getStartPage()-1%>&pageSize=<%=pageResult.getPageSize()%>&searchType=<%=searchType%>&searchWord=<%=searchWord%>">이전</a>
+				<a class="paging-link" href="./board?page=<%=pageResult.getStartPage()-1%>&pageSize=<%=pageResult.getPageSize()%>&searchType=<%=searchType%>&searchWord=<%=searchWord%>">이전</a>
 			<%  }%>
 			<%for(int i=pageResult.getStartPage(); i<=pageResult.getEndPage(); i++)  {	%>
-				<a href="./board?page=<%=i %>&pageSize=<%=pageResult.getPageSize()%>&searchType=<%=searchType%>&searchWord=<%=searchWord%>"><%=i %></a>
+				<a class="paging-link" href="./board?page=<%=i %>&pageSize=<%=pageResult.getPageSize()%>&searchType=<%=searchType%>&searchWord=<%=searchWord%>"><%=i %></a>
 			<%	}%>
 			<%	if(pageResult.isHasNext()) {%>
-				<a href="./board?page=<%=pageResult.getEndPage()+1%>&pageSize=<%=pageResult.getPageSize()%>&searchType=<%=searchType%>&searchWord=<%=searchWord%>">이후</a>
+				<a class="paging-link" href="./board?page=<%=pageResult.getEndPage()+1%>&pageSize=<%=pageResult.getPageSize()%>&searchType=<%=searchType%>&searchWord=<%=searchWord%>">이후</a>
 			<%	}%>
 		</div>
 	<%	} %>
+	
+	</div>
 	
 </body>
 </html>

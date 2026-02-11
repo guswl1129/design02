@@ -106,6 +106,7 @@
     .footer-links a {
         color: #007bff;
         text-decoration: none;
+        margin-right: 20px;
     }
 
     .footer-links a:hover {
@@ -137,6 +138,8 @@
 
         <div class="footer-links">
             <a href="find.jsp">아이디/패스워드 찾기</a>
+            <a href="join.jsp">회원가입</a>
+            <a href="${pageContext.request.contextPath}/">메인으로</a> </div>
         </div>
     </div>
 

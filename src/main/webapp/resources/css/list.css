@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+/* 레이아웃 기본 설정 */
+body {
+    background-color: #fcfcfc;
+    color: #333;
+    font-family: 'Pretendard', sans-serif;
+    margin: 0;
+}
+
+h2 {
+    max-width: 1100px;
+    margin: 40px auto 20px;
+    padding: 0 20px;
+    color: #4A5D45;
+    font-size: 24px;
+}
+
+/* 테이블 컨테이너 */
+.shop-table {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 95%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* 테이블 헤더 */
+.shop-table th {
+    background-color: #B2C9AB; /* 네비바와 통일감 있는 연녹색 */
+    color: white;
+    padding: 15px;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+}
+
+/* 테이블 바디 셀 */
+.shop-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #555;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+/* 행(Row) 호버 효과 */
+.shop-table tbody tr:hover {
+    background-color: #f9fbf8;
+    transition: 0.2s;
+}
+
+/* 이미지 스타일 */
+.shop-table img {
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid #eee;
+    transition: transform 0.2s;
+}
+
+.shop-table img:hover {
+    transform: scale(1.2); /* 마우스 올리면 살짝 확대 */
+}
+
+/* 제목 링크 스타일 */
+.shop-table td a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.shop-table td a:hover {
+    color: #B2C9AB;
+}
+
+/* 가격 스타일 (JSP의 .price 클래스 대응) */
+.price {
+    color: #d9534f !important; /* 조금 더 세련된 레드 */
+    font-weight: bold;
+}
+
+/* 등록 버튼 영역 */
+button {
+    background-color: #E8D2CC; /* 마이페이지와 통일감 있는 핑크베이지 */
+    color: #5D4D4A;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-right: 2.5%; /* 테이블 여백과 맞춤 */
+}
+
+button:hover {
+    background-color: #DBC1B9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* 데이터 없을 때 메시지 */
+.shop-table td[colspan="7"] {
+    padding: 50px;
+    color: #aaa;
+    font-style: italic;
+}

@@ -29,11 +29,11 @@ public class BoardLikeController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("like doPost");
 		
-		int like_stat=0;
 		LikeDAO likeDao=new LikeDAO();
 		BoardDAO dao=new BoardDAO();
 		BoardDTO dto=new BoardDTO();
 		int res=0;
+		int like_stat=0;
 		
 		int board_no;
 		try {
@@ -47,14 +47,14 @@ public class BoardLikeController extends HttpServlet {
 		// get user id from session or request parameter
 		String userId = null;
 		HttpSession session = request.getSession(false);
-		if (session != null && session.getAttribute("user_id") != null) {
-			userId = (String) session.getAttribute("user_id");
+		if (session != null && session.getAttribute("userId") != null) {
+			userId = (String) session.getAttribute("userId");
 		} else {
-			userId = request.getParameter("user_id");
+			userId = request.getParameter("userId");
 		}
 		// if still null or empty, cannot proceed - redirect to login or board list
 		if (userId == null || userId.trim().isEmpty()) {
-			System.out.println("user_id is missing; redirecting to login page");
+			System.out.println("userId is missing; redirecting to login page");
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 			return;
 		}
@@ -64,31 +64,26 @@ public class BoardLikeController extends HttpServlet {
 		dto.setUser_id(userId);
 
 		System.out.println("userId: "+userId);	//:imoony, 글 쓴 사람
+
+		like_stat=likeDao.likeCheck(userId, board_no);	// 뭐가 있으면 1
 		
 		if(like_stat==0) { 	//좋아요 없음->좋아요
-			res=likeDao.like(dto.getUser_id(),dto.getBoard_no()); 	//그냥 쓰여 있는 대로 매개변수/로그인한 유저가 아니라 글쓴 유저 id가 넘어감
-			if(res!=0) {
+			res=likeDao.like(userId, board_no);
+			if (res!=0) {
 				System.out.println("liked");
-				System.out.println("user_id: " + userId);
-				dto.setLike_count(1);
-				dao.likeBoard(dto);
-				like_stat=1;
-			} else {
-				System.out.println("like failed");
+			System.out.println("userId: " + userId);
+			dto.setLike_count(1);
+			dao.likeBoard(dto);
 			}
 		} else { 	//좋아요 있음->좋아요 취소
-			res=likeDao.unlike(dto.getUser_id(),dto.getBoard_no());
+			res=likeDao.unlike(userId, board_no);
 			if(res!=0) {
 				System.out.println("unliked");
-				System.out.println("user_id: " + userId);
-				dto.setLike_count(-1);
-				dao.likeBoard(dto);
-				like_stat=0;
-			} else {
-				System.out.println("unlike failed");
+			System.out.println("userId: " + userId);
+			dto.setLike_count(-1);
+			dao.likeBoard(dto);
 			}
 		}
-		
 		
 		dto=dao.getBoard(board_no);
 		
