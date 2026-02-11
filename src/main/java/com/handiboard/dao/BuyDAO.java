@@ -21,6 +21,7 @@ public class BuyDAO {
         PreparedStatement pstmtBuyer = null;
         PreparedStatement pstmtSeller = null;
         PreparedStatement pstmtOrder = null;
+        PreparedStatement pstmtGetSeller = null; // 판매자 ID 조회를 위한 객체 추가
         boolean isSuccess = false;
         
         try {
@@ -38,23 +39,43 @@ public class BuyDAO {
             System.out.println("구매자 포인트 차감 결과 (행 수): " + buyerResult); // 이게 0이면 실패입니다.
             
             if (buyerResult > 0) {
-            	// 판매자 수익 증가
-            	String sqlSeller = "UPDATE Users SET user_point = user_point + (SELECT item_price FROM item WHERE item_no = ?) "
-                        + "WHERE user_id = (SELECT user_id FROM shop_board WHERE shop_no = ?)";
+            	// 판매자 수익 증가 (직접 ID 지정)
+            	String sqlSeller = "UPDATE Users SET user_point = user_point + "
+            			+ "(SELECT item_price FROM item WHERE item_no = ?) "
+                        + "WHERE id = ?";
+            	
             	// 주문 기록 저장
             	String sqlOrder = "INSERT INTO Orders (buyer_id, shop_no, item_no, status, order_date) "
-                        + "VALUES (?, ?, ?, 1, NOW())";
+                        + " VALUES (?, ?, ?, 1, NOW())";
             	
+            	// 판매자 ID를 찾기 위한 쿼리
+            	String sqlGetSeller = "SELECT id FROM shop_board WHERE shop_no =?";
+            	
+            	// 쿼리문 데이터 
             	pstmtSeller = conn.prepareStatement(sqlSeller);
                 pstmtOrder = conn.prepareStatement(sqlOrder);
+                pstmtGetSeller = conn.prepareStatement(sqlGetSeller);
                 
                 for (int i = 0; i < shopNos.length; i++) {
                     int sNo = Integer.parseInt(shopNos[i]);
                     int iNo = Integer.parseInt(itemNos[i]);
 
+                    // 해당 판매글의 판매자 ID 가져오기
+                    pstmtGetSeller.setInt(1, sNo);
+                    ResultSet rs = pstmtGetSeller.executeQuery();
+                    String sellerId = "";
+                    if (rs.next()) {
+                    	sellerId = rs.getString("id");
+                    }
+                    rs.close();
+                    
+                    if (sellerId.equals("")) {
+                    	throw new Exception("판매자 정보를 찾을 수 없습니다. shop_no : " + sNo);
+                    }
+                    
                     // 판매자 수익 증가 세팅
                     pstmtSeller.setInt(1, iNo);
-                    pstmtSeller.setInt(2, sNo);
+                    pstmtSeller.setInt(2, Integer.parseInt(sellerId)); // 사용자의 int id
                     pstmtSeller.addBatch(); // 여러 개일 경우 성능을 위해 배치 사용
 
                     // 주문 기록 삽입 세팅
@@ -65,28 +86,26 @@ public class BuyDAO {
                 }
                 
             	// 배치 실행
-                int[] sellerResults = pstmtSeller.executeBatch();
-                int[] orderResults = pstmtOrder.executeBatch();
+                pstmtSeller.executeBatch();
+                pstmtOrder.executeBatch();
                 
-                // 모든 처리가 배열 길이만큼 정상 수행되었는지 확인
-                if (sellerResults.length == shopNos.length && orderResults.length == shopNos.length) {
-                    conn.commit(); // 2. 모든 작업 성공 시 최종 확정
-                    isSuccess = true;
-                } else {
+                conn.commit();
+                isSuccess = true;
+                System.out.println("✅ 결제 및 포인트 정산 최종 성공");
+               
+             } else {
+                	System.out.println("❌ 구매자 포인트 부족 또는 ID 불일치");
                     conn.rollback();
-                }
-            } else {
-                conn.rollback(); // 구매자 포인트 부족 시 롤백
-            }
+             }
         } catch (Exception e) {
-        	try { if (conn != null) conn.rollback(); } catch (Exception ex) {}
+        	System.out.println("🔥 트랜잭션 오류 발생: 롤백합니다.");
+            try { if (conn != null) conn.rollback(); } catch (Exception ex) {}
             e.printStackTrace();
         } finally {
-        	// 자원 반납 (close) - 팀장님 프로젝트의 Close 메서드 호출
-            closeAll(pstmtBuyer, pstmtSeller, pstmtOrder, conn);
+        	closeAll(pstmtBuyer, pstmtSeller, pstmtOrder, pstmtGetSeller, conn);
 		}
-		
-		
+           
+        
 		return isSuccess;
 	}
 	

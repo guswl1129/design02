@@ -42,7 +42,7 @@ public class BuyController extends HttpServlet {
 			
 			System.out.println("userPoint 조회 시도--------------------");
 			System.out.println("userId : " + userId);
-			System.out.println("userId : " + userPoint);
+			System.out.println("userPoint : " + userPoint);
 			
 			
 			// 파라미터를 배열로 받습니다.
