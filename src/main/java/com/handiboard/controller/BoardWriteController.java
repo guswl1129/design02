@@ -23,7 +23,7 @@ public class BoardWriteController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("write doGet");
-		RequestDispatcher rd=request.getRequestDispatcher("writePost.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/writePost.jsp");
 		rd.forward(request, response);
 	}
 
@@ -36,10 +36,13 @@ public class BoardWriteController extends HttpServlet {
 		
 		String userId=null;
 		HttpSession session = request.getSession(false);
-		if (session != null && session.getAttribute("user_id") != null) {
-			userId = (String) session.getAttribute("user_id");
+		
+		System.out.println("userId: "+session.getAttribute("userId"));
+		
+		if (session != null && session.getAttribute("userId") != null) {
+			userId = (String) session.getAttribute("userId");
 		} else {
-			userId = request.getParameter("user_id");
+			userId = request.getParameter("userId");
 		}
 		// if still null or empty, cannot proceed - redirect to login or board list
 		if (userId == null || userId.trim().isEmpty()) {

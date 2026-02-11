@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -50,6 +52,9 @@ public class BoardController extends HttpServlet {
 		request.setAttribute("pagingResult", result); 
 		request.setAttribute("searchWord", searchWord);
 		request.setAttribute("searchType", searchType);
+		// 검색어 유지?
+		HttpSession session=request.getSession();
+		session.setAttribute("searchWord", searchWord);
 		
 		// 보냄
 		RequestDispatcher rd=request.getRequestDispatcher("/mainBoard.jsp");

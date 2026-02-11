@@ -53,7 +53,7 @@ public class BoardDetailController extends HttpServlet {
 		
 		request.setAttribute("dto", dto);
 
-		RequestDispatcher rd=request.getRequestDispatcher("postDetail.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("/postDetail.jsp");
 		rd.forward(request, response);
 	}
 

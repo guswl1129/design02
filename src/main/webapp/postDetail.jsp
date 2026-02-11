@@ -27,7 +27,7 @@
 		<button onclick="location.href='./board'">리스트로 돌아가기</button>
 		<br>
 		<%System.out.println("detail.jsp: "+dto.getBoard_no()); %>
-		<button type="button" onclick="location.href='./update?board_no=<%=dto.getBoard_no() %>'">수정</button>	<!-- dto is null -->
+		<button type="button" onclick="location.href='./update?board_no=<%=dto.getBoard_no() %>'">수정</button>
 		<button type="button" onclick="location.href='./delete?board_no=<%=dto.getBoard_no() %>'">삭제</button>
 	</div>
 	
