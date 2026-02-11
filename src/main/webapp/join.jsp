@@ -129,7 +129,7 @@
             
             <div class="input-group">
                 <label for="userid">아이디</label>
-                <input type="text" id="userid" name="userid" placeholder="5~15자의 영문 소문자, 숫자, 특수기호(-,_)" required>
+                <input type="text" id="userid" name="userid" placeholder="3~15자의 영문 소문자, 숫자, 특수기호(-,_)" required>
             </div>
 
             <div class="input-group">
