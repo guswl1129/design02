@@ -6,18 +6,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.jasper.tagplugins.jstl.core.Catch;
-
 import com.handiboard.dto.BoardDTO;
-import com.handiboard.dto.UserDTO;
 import com.handiboard.util.DBConnection;
-
-import jakarta.servlet.jsp.tagext.TryCatchFinally;
 
 public class MyPostsDAO {
 	public List<BoardDTO> LoadPosts(String id) {
 	    List<BoardDTO> list = new ArrayList<>();
-	    String sql = "SELECT board_no, board_title, Date(board_date)AS board_date FROM board WHERE user_id = ? AND board_del = 0";
+	    String sql = "SELECT board_no, board_title, Date(board_date)AS board_date FROM board WHERE user_id = ? AND board_del = 1";
 
 	    try (Connection conn = DBConnection.getInstance().getConn();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -45,7 +40,7 @@ public class MyPostsDAO {
 	public BoardDTO LoadDetailPosts(int no) {
 	    BoardDTO dto = null;
 	    String sql = "SELECT board_no, board_title, board_content, board_date, board_like, "
-	    		+ "board_view, board_del, board_updated FROM board WHERE board_no = ? AND board_del=0";
+	    		+ "board_view, board_del, board_updated FROM board WHERE board_no = ? AND board_del=1";
 
 	    try (Connection conn = DBConnection.getInstance().getConn();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {

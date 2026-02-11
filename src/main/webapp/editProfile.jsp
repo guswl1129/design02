@@ -47,7 +47,7 @@
             <section class="category-box">
                 <div class="category-content" style="padding: 15px;">
                     <label style="display:block; text-align:left; margin-bottom:5px; font-size:0.9rem; color:#666;">닉네임</label>
-                    <input type="text" name="userName" value="<%= user.getName() %>" maxlength="10"
+                    <input type="text" name="userName" value="<%= user.getName() %>" maxlength="10" placeholder="10자 이내로 입력하세요"
                            style="width:100%; border:none; font-size:1.1rem; font-weight:bold; outline:none;">
                 </div>
             </section>
@@ -56,7 +56,7 @@
             <section class = "category-box">
             	<div class="category-content" style="padding: 15px;">
                     <label style="display:block; text-align:left; margin-bottom:5px; font-size:0.9rem; color:#666;">이메일</label>
-                    <input type="text" name="userEmail" value="<%= user.getEmail() %>" 
+                    <input type="text" name="userEmail" value="<%= user.getEmail() %>" placeholder="example@domain.com"
                            style="width:100%; border:none; font-size:1.1rem; font-weight:bold; outline:none;">
                 </div>
             </section>
@@ -70,7 +70,9 @@
 <script type="text/javascript">
 	function validateForm() {
 	    const name = document.querySelector('input[name="userName"]').value.trim();
+	    const namePattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
 	    const email = document.querySelector('input[name="userEmail"]').value.trim();
+	    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 	
 	    // 1. 닉네임 길이 체크
 	    if (name.length === 0) {
@@ -78,13 +80,12 @@
 	        return false;
 	    }
 	    
-	    if (name.length > 10) {
-	        alert("닉네임은 10글자 이내여야 합니다.");
-	        return false;
-	    }
-	    
-	    // 2. 이메일 형식 체크 (정규식 사용)
-	    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	        // 닉네임 검사
+	     if (!namePattern.test(name)) {
+	            alert("닉네임은 한글, 영문, 숫자 조합으로 2~10자 이내로 입력해주세요. (특수문자/공백 제외)");
+	            return false;
+	        }
+
 	    
 	    if (!emailPattern.test(email)) {
 	        alert("올바른 이메일 형식이 아닙니다. (예: example@domain.com)");

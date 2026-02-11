@@ -1,41 +1,78 @@
 @charset "UTF-8";
 
-/* 공통 배경 */
+/* [1] 공통 기본 설정 */
 body {
     background-color: #fcfcfc;
     color: #333;
     line-height: 1.6;
+    margin: 0; /* 바디 기본 여백 제거 */
+    font-family: 'Pretendard', sans-serif;
 }
 
-/* 네비게이션 바: 마이페이지 박스 스타일 응용 */
+/* [2] 네비게이션 바 레이아웃 */
 .nav-bar { 
-    background: #B2C9AB; 
-    padding: 15px 25px; 
+    background: #FFF9F0; /* 따뜻하고 깨끗한 아이보리 배경 */
+    padding: 15px 40px; 
     display: flex; 
     align-items: center; 
-    gap: 25px;
-    border-radius: 12px; 
-    margin-bottom: 30px;
-    box-shadow: 0 4px 12px rgba(178, 201, 171, 0.3); /* 연녹색 그림자 */
+    justify-content: space-between; 
+    border-radius: 20px; /* 좀 더 둥글게 해서 귀여운 느낌 강조 */
+    margin: 20px auto 30px;
+    max-width: 1200px;
+    box-shadow: 0 8px 20px rgba(255, 183, 77, 0.1); /* 은은한 웜톤 그림자 */
+    border: 1px solid #FFE0B2; /* 아주 연한 오렌지빛 테두리 */
 }
 
+/* [3] 네비게이션 내부 요소 공통 링크 스타일 */
 .nav-bar a { 
-    color: #4A5D45; 
     text-decoration: none; 
-    font-weight: 600; 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 로고 스타일 (특수 클래스로 지정) */
+.nav-bar .logo { 
+    color: #FF8A65 !important; 
+    font-size: 24px; 
+    font-weight: 800; /* 좀 더 두껍게 해서 현대적인 타이포그래피 느낌 */
+    letter-spacing: -0.5px;
+}
+
+/* 중앙 메뉴 및 우측 유저 정보 링크 스타일 */
+.nav-menu a, .user-info a { 
+    color: #795548; /* 부드러운 브라운 컬러로 가독성 확보 */
+    font-weight: 700; 
     font-size: 15px;
-    transition: 0.2s;
+    padding: 8px 16px;
+    border-radius: 12px;
 }
 
-.nav-bar a:hover { color: #fff; }
-
-.nav-bar a:first-child { 
-    color: white; 
-    font-size: 20px; 
-    font-weight: bold;
+/* ⭐ 호버 효과: 귀엽게 배경이 차오르는 느낌 */
+.nav-menu a:hover, .user-info a.auth-link:hover { 
+    color: #FF8A65 !important; 
+    background-color: #FFF0E0; /* 아주 연한 피치색 배경 */
+}
+/* 중앙 메뉴 사이 간격 */
+.nav-menu {
+    display: flex;
+    gap: 40px;
 }
 
-/* 버튼: 마이페이지 menu-row의 호버 효과 응용 */
+/* 우측 유저 정보 영역 */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+/* 환영 메시지 */
+.welcome-msg {
+    color: #A1887F;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+/* [4] 버튼 및 섹션 제목 */
 .btn-write { 
     padding: 12px 24px; 
     background: #E8D2CC; 
@@ -54,7 +91,6 @@ body {
     box-shadow: 0 5px 15px rgba(219, 193, 185, 0.4);
 }
 
-/* 섹션 제목 */
 .section-title { 
     font-size: 22px; 
     color: #333; 
@@ -63,58 +99,144 @@ body {
     padding-left: 5px;
 }
 
-
-
-
-
-
-/*이미지 카드 추가한 스타일*/
-/* 마켓 섹션 전체 */
+/* [5] 이미지 카드 마켓 섹션 - 피치 & 코랄 테마 적용 */
 .market-section {
-    max-width: 1000px; /* 메인 컨텐츠 전체 너비 제한 */
+    max-width: 1000px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-/* 카드 컨테이너: flex 대신 grid를 써서 크기를 고정하는 게 가장 깔끔합니다 */
 .card-container {
     display: flex;
-    justify-content: center; /* 가운데 정렬 */
-    gap: 20px; /* 사진 사이 간격 */
-    flex-wrap: wrap; /* 화면이 좁아지면 아래로 내려가게 */
+    justify-content: center;
+    gap: 25px; /* 간격을 살짝 넓혀서 여유롭게 */
+    flex-wrap: wrap;
 }
 
 /* 이미지 전용 카드 */
-/* 이미지 카드 크기를 여기서 직접 조절하세요 */
 .item-card.only-img {
-    width: 280px;  /* 카드의 가로 크기 */
-    height: 350px; /* 카드의 세로 크기 */
-    border-radius: 16px;
+    width: 280px;
+    height: 350px;
+    border-radius: 24px; /* 더 둥글게 해서 귀여운 느낌 강조 */
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-/* 마우스 올리면 살짝 커지는 효과 */
-.item-card.only-img:hover {
-    transform: translateY(-8px); /* scale 대신 위로 떠오르는 느낌 (마이페이지 응용) */
-    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
-    border-color: #B2C9AB;
+    box-shadow: 0 6px 18px rgba(93, 64, 55, 0.08); /* 부드러운 브라운톤 그림자 */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 쫀득한 움직임 */
+    border: 2px solid transparent; /* 호버 시 대비를 위한 투명 테두리 */
+    background: #fff;
 }
 
 .card-img-box {
     width: 100%;
-    height: 100%; /* 카드를 꽉 채우도록 설정 */
+    height: 100%;
 }
 
 .card-img-box img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 이미지가 찌그러지지 않게 꽉 채움 */
+    object-fit: cover;
     display: block;
 }
 
-/* 호버 효과 */
+/* ⭐ 호버 효과 수정: 코랄 & 오렌지 테마 */
 .item-card.only-img:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 25px rgba(178, 201, 171, 0.4);
+    transform: translateY(-12px); /* 살짝 더 높이 도약 */
+    /* 코랄색이 감도는 화사한 그림자로 변경 */
+    box-shadow: 0 15px 30px rgba(255, 138, 101, 0.25); 
+    /* 테두리를 연한 코랄/오렌지 색상으로 변경 */
+    border-color: #FFD180; 
+}
+
+
+/* 광고 배너 섹션 - 피치 & 베이지 테마 */
+.banner-section {
+    max-width: 1200px;
+    margin: 80px auto 60px;
+    padding: 0 20px;
+}
+
+.banner-container {
+    /* 🎨 메인 색감: 베이지에서 부드러운 피치로 이어지는 그라데이션 */
+    background: linear-gradient(135deg, #FFF9F0 0%, #FFEDDF 100%); 
+    border-radius: 28px; /* 귀여운 느낌을 위해 곡률을 더 높임 */
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(255, 138, 101, 0.1); /* 피치톤 그림자 */
+    border: 1px solid #FFE0B2;
+}
+
+.banner-content {
+    flex: 1.2;
+    z-index: 2;
+}
+
+.banner-tag {
+    /* 🎨 상단바 로고와 맞춘 코랄 포인트 */
+    background-color: #FF8A65; 
+    color: white;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(255, 138, 101, 0.2);
+}
+
+.banner-content h2 {
+    font-size: 34px;
+    color: #5D4037; /* 가독성을 위한 진한 브라운 */
+    margin-bottom: 20px;
+    line-height: 1.4;
+    font-weight: 800;
+}
+
+.banner-content p {
+    color: #8D6E63; /* 부드러운 중간 브라운 */
+    font-size: 17px;
+    margin-bottom: 35px;
+    font-weight: 500;
+}
+
+/* 배너 내 버튼: 상단바와 통일 */
+.btn-banner {
+    background-color: #FF8A65;
+    color: white;
+    border: none;
+    padding: 16px 35px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-banner:hover {
+    background-color: #FF7043;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 20px rgba(255, 112, 67, 0.3);
+}
+
+/* 배너 이미지: 부드러운 필터 효과 */
+.banner-image {
+    flex: 0.8;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.banner-image img {
+    max-width: 320px;
+    height: auto;
+    /* 이미지에 따뜻한 느낌을 주는 필터 추가 */
+    filter: drop-shadow(15px 15px 25px rgba(93, 64, 55, 0.1));
+}
+
+/* 푸터 스타일 */
+.main-footer {
+    text-align: center;
+    padding: 40px 0;
+    color: #bbb;
+    font-size: 14px;
 }

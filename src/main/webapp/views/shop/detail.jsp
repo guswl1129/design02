@@ -9,6 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css">
+
 <style>
     .detail-container { width: 800px; margin: 30px auto; display: flex; gap: 30px; font-family: sans-serif; }
     .image-area { width: 400px; }
@@ -29,6 +31,7 @@
 </head>
 
 <body>
+	<%@ include file="/nav.jsp" %>
 	
 	<div class="detail-container">
 		<div class="image-area">
@@ -40,7 +43,7 @@
             <p style="color:#888;">작성자: <%= shop.getUser_id() %> | 등록일: <%= shop.getReg_date() %></p>
             <hr>
             <h3 style="margin-bottom:0;">아이템: <%= shop.getItem_name() %></h3>
-            <p class="price"><%= String.format("%,d", shop.getItem_price()) %> P</p>
+            <p class="price"><%= String.format("%,d", shop.getItem_price()) %> 타래</p>
             
             <div class="content-box">
                 <%= shop.getContent().replace("\n", "<br>") %>

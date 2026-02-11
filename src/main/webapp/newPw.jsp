@@ -114,7 +114,7 @@
             
             <div class="input-group">
                 <label for="pw1">새 비밀번호</label>
-                <input type="password" id="pw1" name="pw1" placeholder="새 비밀번호 입력" required>
+                <input type="password" id="pw1" name="pw1" placeholder="8~16자의 영문 대소문자, 숫자, 특수기호(# $ % & *)" required>
             </div>
             
             <div class="input-group">
@@ -134,10 +134,15 @@
         function validatePassword() {
             const pw1 = document.getElementById('pw1').value;
             const pw2 = document.getElementById('pw2').value;
-
+            const pwPattern = /^[A-Za-z0-9#$%&*]{8,16}$/;
+            
             if (pw1 !== pw2) {
                 alert("비밀번호가 일치하지 않습니다.");
                 return false; // 폼 제출 중단
+            }
+            if(!pwPattern.test(pw1)){
+            	alert("비밀번호는 8~16자의 영문 대소문자, 숫자, 특수기호(#, $, %, &, *)만 가능합니다.");
+                return false;
             }
             return true;
         }
