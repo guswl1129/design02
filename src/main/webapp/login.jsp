@@ -119,7 +119,8 @@
     <div class="login-container">
         <h1>로그인</h1>
         
-        <form action="./login" method="post">
+        <form action="${pageContext.request.contextPath}/login" method="post">
+        	<input type="hidden" name="prevUrl" value="${prevUrl}">
             <div class="input-group">
                 <label for="id">아이디</label>
                 <input type="text" id="id" name="id" placeholder="아이디를 입력하세요" required>

@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //북마크 토글 메서드
 function toggleBookmark(element, boardNo) {
+	console.log("[DEBUG] toggleBookmark called", boardNo);
     const icon = element.querySelector('.bookmark-icon');
     
     // 서블릿(/toggleBookmark.do) 호출
@@ -32,12 +33,28 @@ function toggleBookmark(element, boardNo) {
 				icon.classList.remove('active');
                 icon.src = 'book_empty.png';  // 해제됨
             } else if (data.result === -2) {
-                alert("로그인 후 이용 가능합니다.");
-				location.href = "/handiboard02/login.jsp"; // 로그인 페이지로 유도
+				requireLogin();
             } else if (data.result === -1) {
 			    alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
 							
 			}
         });
 }
+
+//로그인 후 이용 메서드로 분리
+function requireLogin() {
+    alert("로그인 후 이용 가능합니다.");
+	let path = window.location.pathname + window.location.search;
+	//컨텍스트(/handiboard02) 제거해서 /postdetail?... 형태로 만들기
+	if (path.startsWith(contextPath)) {
+	    path = path.substring(contextPath.length);
+	  }
+	const currentUrl = encodeURIComponent(path);
+	
+	const target = contextPath + "/login?prevUrl=" + currentUrl;
+	console.log("[DEBUG] requireLogin target:", target);
+
+    location.href = contextPath + "/login?prevUrl=" + currentUrl;
+}
+
 
