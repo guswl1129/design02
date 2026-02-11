@@ -10,7 +10,9 @@
 </head>
 <body>
 	<div class="nav-bar">
-		<a href="${pageContext.request.contextPath}/" class="logo">HandiBoard</a>
+		<a href="${pageContext.request.contextPath}/" class="logo">
+		<img src="${pageContext.request.contextPath}/resources/images/peach.png" alt="로고아이콘" class="logo-img">
+        HandiBoard</a>
 		<div class="nav-menu">
             <a href="${pageContext.request.contextPath}/shop/list.do">도안 판매</a>
             <a href="${pageContext.request.contextPath}/board">커뮤니티</a>

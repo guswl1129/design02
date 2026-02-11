@@ -29,12 +29,27 @@ body {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 로고 스타일 (특수 클래스로 지정) */
+/* 로고 레이아웃 정렬 */
 .nav-bar .logo { 
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 아이콘과 텍스트 사이 간격 */
     color: #FF8A65 !important; 
     font-size: 24px; 
-    font-weight: 800; /* 좀 더 두껍게 해서 현대적인 타이포그래피 느낌 */
-    letter-spacing: -0.5px;
+    font-weight: 800;
+}
+
+/* 로고 이미지 스타일 */
+.logo-img {
+    width: 32px;  /* 아이콘 크기 조절 (원하시는 대로 숫자를 바꿔보세요) */
+    height: 32px; /* 가로세로 비율 유지 */
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+/* 로고 호버 시 이미지가 살짝 콩 튀어오르는 귀여운 효과 */
+.nav-bar .logo:hover .logo-img {
+    transform: translateY(-3px) rotate(5deg);
 }
 
 /* 중앙 메뉴 및 우측 유저 정보 링크 스타일 */
