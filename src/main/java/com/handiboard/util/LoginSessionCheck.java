@@ -33,29 +33,18 @@ public class LoginSessionCheck extends HttpFilter implements Filter {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// place your code here
-//		//URI 가져오기
-//		String uri=req.getRequestURI();
-//		System.out.println("uri:"+uri);
-//		if(!whiteList.contains(uri)) {
-//				
-//			HttpServletRequest session=(HttpServletRequest) req.getSession();
-//			
-//			UserDTO user=(UserDTO) session.getAttribute("_USER_");
-//			
-//			if(user==null) {
-//				HttpServletResponse res=(HttpServletResponse) response;
-//				res.sendRedirect("/");
-//				return;
-//			}
-//		}
+		
+		System.out.println("URI = " + ((HttpServletRequest) request).getRequestURI());
+		System.out.println("Session = " + ((HttpServletRequest) request).getSession(false));
+
+
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		
-		HttpSession session=req.getSession();
+		HttpSession session=req.getSession(false);
 		
-		if(session.getAttribute("user_id")!=null) {
+		if(session!=null&&session.getAttribute("userId")!=null) {
 			chain.doFilter(request, response);
 		} else {
 			session.setAttribute("message", "로그인이 필요합니다.");

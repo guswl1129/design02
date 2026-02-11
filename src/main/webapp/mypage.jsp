@@ -10,14 +10,14 @@
 <title>나의 디자인</title>
 </head>
 <body>
-	<div class=myHeader> <span onclick="history.back();">&lt;</span>마이페이지</div>
+	<div class=myHeader> <span onclick="location.href='${pageContext.request.contextPath}main'">&lt;</span>마이페이지</div>
 	<%
 	UserDTO user = (UserDTO)request.getAttribute("user");
 	%>
 	<section id="profile" class="category-box">
 		<div class="category-content">
-			<a href="/editProfile" class="menu-row"> 
-                <img src="./user-avator.png" id=user_avator>	
+			<a href="editProfileController" class="menu-row"> 
+                <img src="${pageContext.request.contextPath}<%= user.getProfileImagePath() %>" id="user_avatar">	
 				<span id="nickname" class ="menu-row-content"><%=user.getName()%></span> <!--자바에서 값 가져오는 처리하기 -->
 				<span class="arrow-icon">></span>
 			</a>

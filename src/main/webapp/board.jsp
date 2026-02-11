@@ -73,7 +73,6 @@
 	<br>
 	<a href="logout">로그아웃</a>
 	<br>
-	<a href="addPoint.jsp">충전</a>
 	<br>
 	<a href="${pageContext.request.contextPath}/myPage">마이페이지</a>
 

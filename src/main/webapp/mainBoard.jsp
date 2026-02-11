@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/community.css">
 <title>Insert title here</title>
 </head>
 <body>
@@ -17,10 +18,11 @@
 	PagingResult pageResult=(PagingResult)request.getAttribute("pagingResult");
 	String searchWord=(String)request.getAttribute("searchWord");
 	String searchType=(String)request.getAttribute("searchType");
+	HttpSession sessions=request.getSession();
 	%>
 	<h1>커뮤니티 게시판</h1>
 	
-	<div align="right">
+	<div class=rightButton>
 		<form action="./board" method="get" style="display: inline;">
 		    <select name="searchType" id="searchType">
                 <option value="title">제목</option>
@@ -34,8 +36,8 @@
 		<button type="button" onclick="location.href='./write'">글쓰기</button>
 	</div>
 	<br>
-	<table border="1" style="width: 100%;">
-		<tr style="background-color: skyblue; font-weight: bold;">
+	<table class="board-table">
+		<tr class="board-tr">
 			<th>번호</th>
 			<th>제목</th>
 			<th>글쓴이</th>

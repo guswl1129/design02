@@ -43,7 +43,7 @@ public class BoardUpdateController extends HttpServlet {
 		
 		request.setAttribute("dto", dto);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("editPost.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/editPost.jsp");
 		rd.forward(request, response);
 	}
 

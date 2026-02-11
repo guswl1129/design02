@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDTO {
-	private String id,pw,name,email;
+	private String id,pw,name,email,profileImagePath;
 	private int count,point,user_no;
 	
 }
