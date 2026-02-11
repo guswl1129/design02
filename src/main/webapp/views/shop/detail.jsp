@@ -43,7 +43,7 @@
             <p style="color:#888;">작성자: <%= shop.getUser_id() %> | 등록일: <%= shop.getReg_date() %></p>
             <hr>
             <h3 style="margin-bottom:0;">아이템: <%= shop.getItem_name() %></h3>
-            <p class="price"><%= String.format("%,d", shop.getItem_price()) %> P</p>
+            <p class="price"><%= String.format("%,d", shop.getItem_price()) %> 타래</p>
             
             <div class="content-box">
                 <%= shop.getContent().replace("\n", "<br>") %>

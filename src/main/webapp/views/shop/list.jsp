@@ -40,7 +40,7 @@
 	                        <div class="product-tag"><%= shop.getItem_name() %></div>
 	                        <div class="product-name"><%= shop.getTitle() %></div>
 	                        <div class="product-bottom">
-	                            <span class="product-price"><%= String.format("%,d", shop.getItem_price()) %>원</span>
+	                            <span class="product-price"><%= String.format("%,d", shop.getItem_price()) %>타래</span>
 	                            <span class="product-seller"><%= shop.getUser_id() %></span>
 	                        </div>
 	                    </div>
