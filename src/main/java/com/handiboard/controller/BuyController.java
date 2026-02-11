@@ -33,13 +33,12 @@ public class BuyController extends HttpServlet {
 			// 세션에서 로그인한 유저 ID 가져오기
 			String userId = (String)request.getSession().getAttribute("userId");
 			
-			// BuyDAO 객체 생성
+			// BuyDAO 객체 생성 (포인트 조회를 위해 생성합니다.) 
 			BuyDAO buyDao = new BuyDAO();
 			// DB에서 최신 포인트 조회
 			int userPoint = buyDao.getPoint(userId);
 			// JSP에서 쓸 수 있도록 request에 담기
 			request.setAttribute("userPoint", userPoint);
-			
 			System.out.println("userPoint 조회 시도--------------------");
 			System.out.println("userId : " + userId);
 			System.out.println("userPoint : " + userPoint);
@@ -79,6 +78,10 @@ public class BuyController extends HttpServlet {
             request.setAttribute("totalPrice", totalPrice);
             // 결제 화면 이동 (Forward 방식으로 buy.jsp 화면으로 이동합니다)
             request.getRequestDispatcher("/views/buy/buy.jsp").forward(request, response);
+            
+		} else if (command.equals("/buy/success.do")) {
+			// 결제 완료 성공 페이지 이동
+			request.getRequestDispatcher("/views/buy/buySuccess.jsp").forward(request, response);
 		}
 	}
 
