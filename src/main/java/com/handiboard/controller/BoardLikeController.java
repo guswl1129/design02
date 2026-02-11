@@ -90,7 +90,7 @@ public class BoardLikeController extends HttpServlet {
 		
 		System.out.println("like count updated to: " + dto.getLike_count());
 		
-		response.sendRedirect(request.getContextPath() + "/detail?board_no="+board_no);
+		response.sendRedirect(request.getContextPath() + "/detail?board_no="+board_no+"&from=like");
 	}
 
 }
