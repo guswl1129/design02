@@ -2,6 +2,7 @@ package com.handiboard.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import com.handiboard.dto.BoardDTO;
 import com.handiboard.dto.UserDTO;
@@ -43,6 +44,29 @@ public class LikeDAO {
 			pstmt.setInt(1, board_no);
 			pstmt.setString(2, user_id);
 			result=pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	// 좋아요 했는지 확인
+	public int likeCheck(String user_id, int board_no) {
+		if (user_id == null || user_id.trim().isEmpty()) {
+			System.out.println("LikeDAO.likeCheck called with null/empty user_id");
+			return 0; // defensive
+		}
+		int result=0;
+		
+		String sql="SELECT 1 FROM board_like_user WHERE board_no=? AND user_id=?";
+		try (Connection conn=DBConnection.getInstance().getConn();
+				PreparedStatement pstmt=conn.prepareStatement(sql);){
+			pstmt.setInt(1, board_no);
+			pstmt.setString(2, user_id);
+			ResultSet rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=1;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
