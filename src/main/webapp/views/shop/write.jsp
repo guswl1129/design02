@@ -4,6 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <title>도안 판매 등록</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css">
+
 <style>
     body {
         background-color: #fcfcfc;

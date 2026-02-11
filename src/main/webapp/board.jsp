@@ -22,7 +22,7 @@
 
             <div class="item-card only-img">
                 <div class="card-img-box">
-                    <img src="${pageContext.request.contextPath}/resources/images/image04.jpg" alt="도안 2">
+                    <img src="${pageContext.request.contextPath}/resources/upload/knit00.jpg" alt="도안 2">
                 </div>
             </div>
 

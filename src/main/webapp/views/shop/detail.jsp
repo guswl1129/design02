@@ -9,6 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css">
+
 <style>
     .detail-container { width: 800px; margin: 30px auto; display: flex; gap: 30px; font-family: sans-serif; }
     .image-area { width: 400px; }
@@ -29,6 +31,7 @@
 </head>
 
 <body>
+	<%@ include file="/nav.jsp" %>
 	
 	<div class="detail-container">
 		<div class="image-area">
