@@ -143,34 +143,34 @@
         <span onclick="location.href='myPage'">&lt;</span> 내 게시글 모아보기
     </div>
 
-	<div class="wrap-container">
-	    <div class="post-list">
-	        <% 
-	        List<BoardDTO> myPost = (List<BoardDTO>) request.getAttribute("myPosts");
-	        
-	        if (myPost != null && !myPost.isEmpty()) {
-	            // 1. 순번을 위한 변수를 1로 초기화합니다.
-	            int seq = 1; 
-	            for(BoardDTO dto : myPost) {
-	        %>
-	        <div class="post-item" onclick="location.href='postDetailController?board_no=<%=dto.getBoard_no()%>'">
-	            <div class="post-header">
-	                <span class="post-num">No.<%= seq++ %></span>
-	                <span class="post-date"><%= dto.getDate() %></span>
-	            </div>
-	            <div class="post-title"><%= dto.getTitle() %></div>
-	        </div>
-	        <% 
-	            }
-	        } else { 
-	        %>
-	        <div class="empty-msg">
-	            <p>작성된 게시글이 없습니다.</p>
-	        </div>
-	        <% 
-	        } 
-	        %>
-	    </div>
+<div class="wrap-container">
+    <div class="post-list">
+        <% 
+        List<BoardDTO> myPost = (List<BoardDTO>) request.getAttribute("myPosts");
+        
+        if (myPost != null && !myPost.isEmpty()) {
+            // 1. 순번을 위한 변수를 1로 초기화합니다.
+            int seq = 1; 
+            for(BoardDTO dto : myPost) {
+        %>
+        <div class="post-item" onclick="location.href='postDetailController?board_no=<%=dto.getBoard_no()%>'">
+            <div class="post-header">
+                <span class="post-num">No.<%= seq++ %></span>
+                <span class="post-date"><%= dto.getDate() %></span>
+            </div>
+            <div class="post-title"><%= dto.getTitle() %></div>
+        </div>
+        <% 
+            }
+        } else { 
+        %>
+        <div class="empty-msg">
+            <p>작성된 게시글이 없습니다.</p>
+        </div>
+        <% 
+        } 
+        %>
+    </div>
 
         <div class="footer-action">
             <button class="back-btn" onclick="location.href='myPage'">마이페이지로 돌아가기</button>
