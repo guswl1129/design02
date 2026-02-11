@@ -46,7 +46,8 @@ public class BuyDAO {
             	
             	// 주문 기록 저장
             	String sqlOrder = "INSERT INTO Orders (buyer_id, shop_no, item_no, status, order_date) "
-                        + " VALUES (?, ?, ?, 1, NOW())";
+                        + " VALUES (?, ?, ?, 1, NOW())" 
+            			+ " ON DUPLICATE KEY UPDATE status = 1";
             	
             	// 판매자 ID를 찾기 위한 쿼리
             	String sqlGetSeller = "SELECT id FROM shop_board WHERE shop_no =?";
