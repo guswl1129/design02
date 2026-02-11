@@ -1,3 +1,5 @@
+<%@page import="com.handiboard.dto.UserDTO"%>
+<%@page import="com.handiboard.dao.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -123,20 +125,26 @@
 <body>
     <div class="join-container">
         <h2>회원가입</h2>
-        <form action="./join" method="post">
+        <form action="./join" method="post" onsubmit="return validateForm();">
+            
             <div class="input-group">
                 <label for="userid">아이디</label>
-                <input type="text" id="userid" name="userid" placeholder="4~12자 영문, 숫자" required>
+                <input type="text" id="userid" name="userid" placeholder="5~15자의 영문 소문자, 숫자, 특수기호(-,_)" required>
             </div>
 
             <div class="input-group">
                 <label for="userpw">비밀번호</label>
-                <input type="password" id="userpw" name="userpw" placeholder="비밀번호를 입력하세요" required>
+                <input type="password" id="userpw" name="userpw" placeholder="8~16자의 영문 대소문자, 숫자, 특수기호(# $ % & *)" required>
             </div>
 
             <div class="input-group">
-                <label for="name">이름 (닉네임)</label>
-                <input type="text" id="name" name="name" placeholder="사용하실 이름을 입력하세요" required>
+                <label for="userpw2">비밀번호 확인</label>
+                <input type="password" id="userpw2" name="userpw2" placeholder="비밀번호를 다시 입력하세요" required>
+            </div>
+
+            <div class="input-group">
+                <label for="name">닉네임</label>
+                <input type="text" id="name" name="name" placeholder="2~10자 이내(특수문자/공백 제외)" required>
             </div>
 
             <div class="input-group">
@@ -155,4 +163,62 @@
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    // 1. 서버에서 보낸 에러 메시지 처리 (함수 밖, 페이지 로드시 실행)
+    <%
+        String msg = (String)session.getAttribute("errorMessage");
+        if(msg != null) {
+    %>
+        alert("<%= msg %>");
+    <%
+        session.removeAttribute("errorMessage");
+        }
+    %>
+
+    // 2. 폼 유효성 검사 함수
+    function validateForm() {
+        const id = document.querySelector('input[name="userid"]').value.trim();
+        const idPattern = /^[a-z0-9_-]{3,15}$/; // 길이를 정규식에 포함하면 더 깔끔합니다.
+        
+        const pw = document.querySelector('input[name="userpw"]').value.trim();
+        const pw2 = document.querySelector('input[name="userpw2"]').value.trim();
+        const pwPattern = /^[A-Za-z0-9#$%&*]{8,16}$/;
+        
+        const name = document.querySelector('input[name="name"]').value.trim();
+        const namePattern = /^[a-zA-Z0-9가-힣]{2,10}$/;
+        
+        const email = document.querySelector('input[name="email"]').value.trim();
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        
+        // 아이디 검사
+        if (!idPattern.test(id)) {
+            alert("아이디는 3~15자의 영문 소문자, 숫자, 특수기호(-,_)만 가능합니다.");
+            return false;
+        }
+
+        // 비밀번호 검사 (기존 id.length 오타 수정)
+        if (!pwPattern.test(pw)) {
+            alert("비밀번호는 8~16자의 영문 대소문자, 숫자, 특수기호(# $ % & *)만 가능합니다.");
+            return false;
+        }
+        if(pw!=pw2){
+        	alert("비밀번호가 다릅니다.");
+            return false;
+        }
+        
+        // 닉네임 검사
+        if (!namePattern.test(name)) {
+            alert("닉네임은 한글, 영문, 숫자 조합으로 2~10자 이내로 입력해주세요. (특수문자/공백 제외)");
+            return false;
+        }
+        
+        // 이메일 검사
+        if (email.length > 0 && !emailPattern.test(email)) {
+            alert("올바른 이메일 형식이 아닙니다. (예: example@domain.com)");
+            return false;
+        }
+    
+        return true;
+    }
+</script>
 </html>

@@ -8,6 +8,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import org.mindrot.bcrypt.BCrypt;
@@ -50,28 +52,32 @@ public class JoinController extends HttpServlet {
 		String encryptedPw = BCrypt.hashpw(userpw, BCrypt.gensalt());
 		// 암호화된 문자열을 저장 -> dto에 담아 데이터베이스에 전달 
 		
-		// DTO에 담기 
-		UserDTO dto = new UserDTO();
-		dto.setId(userid);
-		dto.setPw(encryptedPw);
-		dto.setName(name);
-		dto.setEmail(email);
-		
-		// DAO 호출
 		InsertMemberDAO dao = new InsertMemberDAO();
-		int result = dao.insertMember(dto);
-		
-		// 성공 시 성공 페이지로 이동
-		if (result > 0) {
-			response.sendRedirect("joinOk.jsp"); 
-		} else {
-			response.sendRedirect("join.jsp"); 
-			
-		}
-		
-		
-		
+		UserDTO dto = new UserDTO();
 	
+		// DTO에 담기 
+		if(dao.duplicateCheck(userid)==1) {
+			HttpSession session = request.getSession(); // 세션가져오기
+			session.setAttribute("errorMessage", "이미 사용 중인 아이디입니다.");
+			response.sendRedirect("join.jsp");
+			return;
+			
+		}else {
+			
+			dto.setId(userid);
+			dto.setPw(encryptedPw);
+			dto.setName(name);
+			dto.setEmail(email);
+			// DAO 호출
+			int result = dao.insertMember(dto);
+			
+			// 성공 시 성공 페이지로 이동
+			if (result > 0) {
+				response.sendRedirect("joinOk.jsp"); 
+			} else {
+				response.sendRedirect("join.jsp"); 
+				
+			}
+		}
 	}
-
 }

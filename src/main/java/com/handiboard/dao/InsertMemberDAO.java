@@ -4,6 +4,7 @@ package com.handiboard.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.handiboard.dto.UserDTO;
 import com.handiboard.util.DBConnection;
@@ -30,6 +31,21 @@ public class InsertMemberDAO {
 
 		return result;	// 성공은 1 반환
 
+	}
+	public int duplicateCheck(String id){
+		String sql="SELECT user_id from Users WHERE user_id= ?";
+		try(Connection conn = DBConnection.getInstance().getConn();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return 1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 }
