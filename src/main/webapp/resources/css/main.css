@@ -99,7 +99,7 @@ body {
     padding-left: 5px;
 }
 
-/* [5] 이미지 카드 마켓 섹션 */
+/* [5] 이미지 카드 마켓 섹션 - 피치 & 코랄 테마 적용 */
 .market-section {
     max-width: 1000px;
     margin: 40px auto;
@@ -109,18 +109,20 @@ body {
 .card-container {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 25px; /* 간격을 살짝 넓혀서 여유롭게 */
     flex-wrap: wrap;
 }
 
+/* 이미지 전용 카드 */
 .item-card.only-img {
     width: 280px;
     height: 350px;
-    border-radius: 16px;
+    border-radius: 24px; /* 더 둥글게 해서 귀여운 느낌 강조 */
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    border: 1px solid transparent; /* 호버 시 테두리 대비 */
+    box-shadow: 0 6px 18px rgba(93, 64, 55, 0.08); /* 부드러운 브라운톤 그림자 */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 쫀득한 움직임 */
+    border: 2px solid transparent; /* 호버 시 대비를 위한 투명 테두리 */
+    background: #fff;
 }
 
 .card-img-box {
@@ -135,10 +137,13 @@ body {
     display: block;
 }
 
+/* ⭐ 호버 효과 수정: 코랄 & 오렌지 테마 */
 .item-card.only-img:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 25px rgba(178, 201, 171, 0.4);
-    border-color: #B2C9AB;
+    transform: translateY(-12px); /* 살짝 더 높이 도약 */
+    /* 코랄색이 감도는 화사한 그림자로 변경 */
+    box-shadow: 0 15px 30px rgba(255, 138, 101, 0.25); 
+    /* 테두리를 연한 코랄/오렌지 색상으로 변경 */
+    border-color: #FFD180; 
 }
 
 
