@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.no-post{
+	
+}
+.right-btn{
+	text-align: right;
+}
+.back-btn{
+	background-color: #CDECFA;
+	border-radius: 5px;
+}
+.edit-btn{
+	margin-top: 5px;
+	background-color: #CDECFA;
+	border-radius: 5px;
+}
+.del-btn{
+	margin-top: 5px;
+	background-color: #CDECFA;
+	border-radius: 5px;
+}
+.post{
+	align-content: center;
+	margin: 5%;
+	padding: 5%;
+	border: 2px solid;
+	border-color: #dcdcdc;
+	border-radius: 20px;
+}
+.post-content{
+	margin-bottom: 10px;
+}
+.like{
+	
+}
+.like-btn{
+	background-color: #FFE1E6;
+	border-radius: 5px;
+}

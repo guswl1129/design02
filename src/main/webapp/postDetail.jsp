@@ -6,6 +6,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/postBookmark.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/postDetail.css">
     <script src="${pageContext.request.contextPath}/myList.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -27,7 +28,7 @@
 	%>
 	
 	<div class="right-btn">
-		<button class="back-btn" onclick="location.href='./board'">리스트로 돌아가기</button>
+		<button class="back-btn" onclick="history.back()">리스트로 돌아가기</button>
 		<br>
 		<%System.out.println("detail.jsp: "+dto.getBoard_no()); %>
 		<button class="edit-btn" type="button" onclick="location.href='./update?board_no=<%=dto.getBoard_no() %>'">수정</button>
@@ -49,7 +50,9 @@
 			<br>
 			작성일 : <%=dto.getDate() %>
 			<br>
+			<br>
 				<%=dto.getContent() %>
+			<br>
 			<br>
 			조회수 : <%=dto.getView_count() %>
 			<br>

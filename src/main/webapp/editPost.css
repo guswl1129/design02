@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+.update-section{
+	align-content: center;
+	margin: 5%;
+	padding: 5%;
+	border: 2px solid;
+	border-color: #dcdcdc;
+	border-radius: 20px;
+}
+.right-btn{
+	text-align: right;
+}
+.back-btn{
+	background-color: #CDECFA;
+	border-radius: 5px;
+}
+.writer{
+	
+}
+.update-form{
+	
+}
+.update-title{
+	width: 100%;
+	height: 30px;
+}
+.update-content{
+	width: 100%;
+	height: 300px;
+}
+.submit-btn{
+	background-color: #CDECFA;
+	border-radius: 5px;
+}
