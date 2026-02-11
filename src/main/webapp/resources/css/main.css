@@ -140,3 +140,98 @@ body {
     box-shadow: 0 12px 25px rgba(178, 201, 171, 0.4);
     border-color: #B2C9AB;
 }
+
+
+/* 광고 배너 섹션 - 피치 & 베이지 테마 */
+.banner-section {
+    max-width: 1200px;
+    margin: 80px auto 60px;
+    padding: 0 20px;
+}
+
+.banner-container {
+    /* 🎨 메인 색감: 베이지에서 부드러운 피치로 이어지는 그라데이션 */
+    background: linear-gradient(135deg, #FFF9F0 0%, #FFEDDF 100%); 
+    border-radius: 28px; /* 귀여운 느낌을 위해 곡률을 더 높임 */
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(255, 138, 101, 0.1); /* 피치톤 그림자 */
+    border: 1px solid #FFE0B2;
+}
+
+.banner-content {
+    flex: 1.2;
+    z-index: 2;
+}
+
+.banner-tag {
+    /* 🎨 상단바 로고와 맞춘 코랄 포인트 */
+    background-color: #FF8A65; 
+    color: white;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(255, 138, 101, 0.2);
+}
+
+.banner-content h2 {
+    font-size: 34px;
+    color: #5D4037; /* 가독성을 위한 진한 브라운 */
+    margin-bottom: 20px;
+    line-height: 1.4;
+    font-weight: 800;
+}
+
+.banner-content p {
+    color: #8D6E63; /* 부드러운 중간 브라운 */
+    font-size: 17px;
+    margin-bottom: 35px;
+    font-weight: 500;
+}
+
+/* 배너 내 버튼: 상단바와 통일 */
+.btn-banner {
+    background-color: #FF8A65;
+    color: white;
+    border: none;
+    padding: 16px 35px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-banner:hover {
+    background-color: #FF7043;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 20px rgba(255, 112, 67, 0.3);
+}
+
+/* 배너 이미지: 부드러운 필터 효과 */
+.banner-image {
+    flex: 0.8;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.banner-image img {
+    max-width: 320px;
+    height: auto;
+    /* 이미지에 따뜻한 느낌을 주는 필터 추가 */
+    filter: drop-shadow(15px 15px 25px rgba(93, 64, 55, 0.1));
+}
+
+/* 푸터 스타일 */
+.main-footer {
+    text-align: center;
+    padding: 40px 0;
+    color: #bbb;
+    font-size: 14px;
+}
