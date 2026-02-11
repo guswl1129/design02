@@ -11,44 +11,46 @@ body {
 
 /* [2] 네비게이션 바 레이아웃 */
 .nav-bar { 
-    background: #B2C9AB; 
+    background: #FFF9F0; /* 따뜻하고 깨끗한 아이보리 배경 */
     padding: 15px 40px; 
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-    border-radius: 12px; 
+    border-radius: 20px; /* 좀 더 둥글게 해서 귀여운 느낌 강조 */
     margin: 20px auto 30px;
     max-width: 1200px;
-    box-shadow: 0 4px 12px rgba(178, 201, 171, 0.3);
+    box-shadow: 0 8px 20px rgba(255, 183, 77, 0.1); /* 은은한 웜톤 그림자 */
+    border: 1px solid #FFE0B2; /* 아주 연한 오렌지빛 테두리 */
 }
 
 /* [3] 네비게이션 내부 요소 공통 링크 스타일 */
 .nav-bar a { 
     text-decoration: none; 
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 로고 스타일 (특수 클래스로 지정) */
 .nav-bar .logo { 
-    color: white !important; 
-    font-size: 22px; 
-    font-weight: bold;
-    flex-shrink: 0;
+    color: #FF8A65 !important; 
+    font-size: 24px; 
+    font-weight: 800; /* 좀 더 두껍게 해서 현대적인 타이포그래피 느낌 */
+    letter-spacing: -0.5px;
 }
 
 /* 중앙 메뉴 및 우측 유저 정보 링크 스타일 */
 .nav-menu a, .user-info a { 
-    color: #4A5D45; 
-    font-weight: 600; 
+    color: #795548; /* 부드러운 브라운 컬러로 가독성 확보 */
+    font-weight: 700; 
     font-size: 15px;
-    padding: 5px 10px;
+    padding: 8px 16px;
+    border-radius: 12px;
 }
 
-/* ⭐ 호버 효과 통합 해결: 모든 메뉴에 동일하게 적용 */
+/* ⭐ 호버 효과: 귀엽게 배경이 차오르는 느낌 */
 .nav-menu a:hover, .user-info a.auth-link:hover { 
-    color: #fff !important; 
+    color: #FF8A65 !important; 
+    background-color: #FFF0E0; /* 아주 연한 피치색 배경 */
 }
-
 /* 중앙 메뉴 사이 간격 */
 .nav-menu {
     display: flex;
@@ -63,9 +65,11 @@ body {
     flex-shrink: 0;
 }
 
+/* 환영 메시지 */
 .welcome-msg {
-    color: #4A5D45;
+    color: #A1887F;
     font-size: 14px;
+    margin-right: 10px;
 }
 
 /* [4] 버튼 및 섹션 제목 */
