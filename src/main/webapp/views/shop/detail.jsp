@@ -72,6 +72,8 @@
 	            alert("이미 장바구니에 있는 상품입니다.");
 	        } else if (msg === 'db_error') {
 	            alert("데이터베이스 처리 중 오류가 발생했습니다.");
+	        } else if (msg === 'already_purchased') {
+	            alert("이미 구매한 제품입니다.");
 	        }
 		};
 	

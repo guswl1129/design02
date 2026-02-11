@@ -77,13 +77,15 @@ public class InCartController extends HttpServlet {
 	                return;
 	            } else if (cartStatus == 0) {
 	                // 존재하지 않음: 토글(등록) 메서드 호출
-	                result = orderDAO.toggleInCart(userId, shopNo, itemNo);
+	                result = orderDAO.insertInCart(userId, shopNo, itemNo);
 	                if (result == 1) {
 	                    response.sendRedirect(request.getContextPath() + "/shop/detail.do?shop_no=" + shopNo + "&msg=add_success");
-	                } else {
+	                } else if(result==-1){
 	                    handleError(response, result, "/detail.do?shop_no=" + shopNo);
-	                }
-	            } else {
+	                } 
+	            } else if(cartStatus==2){
+                	response.sendRedirect(request.getContextPath() + "/shop/detail.do?shop_no=" + shopNo + "&msg=already_purchased");
+                } else {
 	                // DB 에러 (-1)
 	                handleError(response, -1, request.getContextPath() + "/shop/detail.do?shop_no=" + shopNo);
 	            }

@@ -82,7 +82,7 @@ public class OrderDAO {
 	// 장바구니 상태 검사 메소드 (status 0: 장바구니 담긴 상태)
 	public int isInCart(String userId, int shopNo) {
 	    // 이미 결제 완료(status=1)된 것이 아니라, 장바구니(status=0)에 있는지 확인
-	    String sql = "SELECT COUNT(*) AS count FROM Orders WHERE buyer_id = ? AND shop_no = ? AND status = 0";
+	    String sql = "SELECT COUNT(*) AS count, status FROM Orders WHERE buyer_id = ? AND shop_no = ?";
 	    int result = -1; //기본값 (DB 로딩 오류 or sql문 오류)
 	    
 	    try (Connection conn = DBConnection.getInstance().getConn();
@@ -94,13 +94,17 @@ public class OrderDAO {
 	        try (ResultSet rs = pstmt.executeQuery()) {
 	            if (rs.next()) {
 	                // 결과가 있으면 1(장바구니에 있음), 없으면 0(없음) 반환
-	                result = (rs.getInt("count") >= 1) ? 1 : 0;
+	            	if(rs.getInt("status")==0) {
+	            		result = (rs.getInt("count") >= 1) ? 1 : 0;
+	            	} else if(rs.getInt("status")==1) {
+	            		result = 2;
+	            	}
 	            }
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	    return result; //-1: DB 로딩 오류, 1: 장바구니에 있음, 0: 장바구니에 없음
+	    return result; //-1: DB 로딩 오류, 1: 장바구니에 있음, 0: 장바구니에 없음, 2: 이미 구매한 상품
 	}
 	//장바구니 추가 메소드
 	public int insertInCart(String userId, int shopNo, int itemNo) {
