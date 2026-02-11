@@ -12,7 +12,7 @@
     .profile-preview img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #eee; }
     .file-input { margin-top: 10px; margin-bottom: 30px;}
     .save-btn { width: 100%; background-color: #333; color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer;
-    margin-top: 150px; }
+    margin-top: 60px; }
     .category-box{margin-top: 30px;}
 </style>
 </head>
@@ -35,6 +35,14 @@
             <div>            
                 <input type="file" name="profileImage" class="file-input">
             </div>
+            
+            <section class = "category-box">
+            	<div class="category-content" style="padding: 15px;">
+                    <label style="display:block; text-align:left; margin-bottom:5px; font-size:0.9rem; color:#666;">아이디(기본)</label>
+                    <input type="text" name="userId" value="<%= user.getId() %>" readonly
+                           style="width:100%; border:none; font-size:1.1rem; outline:none; cursor:default;">
+                </div>
+            </section>
 
             <section class="category-box">
                 <div class="category-content" style="padding: 15px;">
@@ -44,6 +52,7 @@
                 </div>
             </section>
             
+            
             <section class = "category-box">
             	<div class="category-content" style="padding: 15px;">
                     <label style="display:block; text-align:left; margin-bottom:5px; font-size:0.9rem; color:#666;">이메일</label>
@@ -51,6 +60,8 @@
                            style="width:100%; border:none; font-size:1.1rem; font-weight:bold; outline:none;">
                 </div>
             </section>
+            
+            
 
             <button type="submit" class="save-btn">저장하기</button>
         </form>

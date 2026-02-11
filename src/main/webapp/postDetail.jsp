@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/postBookmark.css">
+    <script src="${pageContext.request.contextPath}/myList.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -33,7 +35,15 @@
 	</div>
 	
 	<div class="post">
-		<h2><%=dto.getTitle() %></h2>
+		<div class="post-header" style="position: relative">
+			<h2><%=dto.getTitle() %></h2>
+			<span class="bookmark-btn" 
+		    	  data-db-error="${dbError}"
+		    	  data-is-bookmarked="${isBookmarked}"
+		    	  onclick="toggleBookmark(this, <%=dto.getBoard_no() %>)">
+	           <img src="${pageContext.request.contextPath}/${isBookmarked == 1 ? 'book_filled.png' : 'book_empty.png'}" class="bookmark-icon" alt="북마크">
+	    	</span>
+    	</div>
 		<div class="post-content">
 			작성자 : <%=dto.getUser_id() %>
 			<br>

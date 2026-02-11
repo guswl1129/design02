@@ -1,186 +1,226 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>코인 충전 페이지</title>
+<title>타래 충전</title>
 <style>
+    /* 전체 배경 및 레이아웃 */
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        background-color: #f8f9fa; /* 연한 회색 배경 */
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
     }
-    .wrap {
-        text-align: center;
-        margin-top: 50px;
-    }
-    .content {
-        background-color: #E1BFFF;
-        border-radius: 15px;
-        width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-    .mycoin {
-        font-size: 20px;
-        margin-bottom: 20px;
-        display: flex; /* 요소들을 가로로 배치 */
-        gap: 150px;
-        background-color: #D6A3FF;
-        border-radius: 15px;
-        margin-top:10px;
-        padding: 20px; /*글씨와 박스 사이의 거리*/
-    	justify-content: space-between; /* 양 끝으로 밀어내기 */
-    	align-items: center;
-    	with: 100%;
-    }
-    .mycoin span {
+
+    /* 상단 헤더 (디자인 통일) */
+    .myHeader {
+        width: 100%;
+        max-width: 450px;
+        background-color: #ffffff;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        border-bottom: 1px solid #eee;
         font-weight: bold;
-        color: #666666;
-        
+        font-size: 1.1rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
     }
-    .label{
-    
-    white-space: nowrap;
-    
+
+    .myHeader a {
+        text-decoration: none;
+        color: #333;
+        font-size: 1.2rem;
+        padding: 5px;
     }
-    .amount{
-    white-space: nowrap;
+
+    /* 메인 컨테이너 */
+    .wrap {
+        width: 100%;
+        max-width: 450px;
+        background-color: #ffffff;
+        min-height: calc(100vh - 56px);
+        padding: 30px 20px;
+        box-sizing: border-box;
+        text-align: center;
     }
+
+    /* 보유 코인 박스 */
+    .mycoin {
+        background-color: #f3e8ff; /* 아주 연한 보라 */
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        border: 1px solid #e9d5ff;
+    }
+
+    .mycoin .label {
+        font-size: 0.95rem;
+        color: #6b21a8; /* 진한 보라 */
+        font-weight: 600;
+    }
+
+    .mycoin .amount {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: #7e22ce;
+    }
+
+    /* 충전 선택 그리드 (기존 유지 및 디자인 강화) */
     .payment-select {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 30px;
-    }
-    .coinbox {
-        background-color: white;
-        border-radius: 10px;
-        padding: 15px;
-        cursor: pointer;
-        border: 2px solid transparent;
-        transition: 0.2s;
-    }
-    .coinbox:hover { /*버튼을 눌렀을때*/
-        border-color: #3498db;
-        background-color: #ecf6fd;
-    }
-    .coinbox.selected {
-        border-color: #2980b9;
-        background-color: #d6ecff;
-    }
-    .coin {
-        display: block;
-        font-size: 18px;
-        font-weight: bold;
-    }
-    .money {
-        color: #555;
-    }
-    .charge-btn {
-        margin-top: 20px;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 8px;
-        background-color: #3498db;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    .charge-btn:disabled {
-        background-color: #aaa;
-        cursor: not-allowed;
+        gap: 15px; /* 간격 최적화 */
+        margin-bottom: 30px;
     }
 
-    .header a:link, .header a:visited{
-    color:black;
-    text-decoration-line:none; 
-    
+    .coinbox {
+        background-color: #ffffff;
+        border: 2px solid #f3f4f6;
+        border-radius: 12px;
+        padding: 20px 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .coinbox:hover {
+        border-color: #d8b4fe;
+        background-color: #faf5ff;
+    }
+
+    .coinbox.selected {
+        border-color: #a855f7; /* 포인트 보라 */
+        background-color: #f3e8ff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(168, 85, 247, 0.1);
+    }
+
+    .coin {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .money {
+        font-size: 0.9rem;
+        color: #888;
+    }
+
+    .coinbox.selected .coin { color: #7e22ce; }
+    .coinbox.selected .money { color: #a855f7; }
+
+    /* 충전 버튼 */
+    .charge-btn {
+        width: 100%;
+        padding: 16px;
+        border: none;
+        border-radius: 12px;
+        background-color: #a855f7;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-top: 80px;
+    }
+
+    .charge-btn:hover {
+        background-color: #9333ea;
+    }
+
+    .charge-btn:disabled {
+        background-color: #e5e7eb;
+        color: #9ca3af;
+        cursor: not-allowed;
     }
 </style>
 </head>
 <body>
-<div class="wrap">
-    <div class="header">
-        <h1>ㅤㅤㅤㅤㅤ타래 충전ㅤㅤㅤㅤ<a href="myPage">X</a></h1>
-        
+
+    <div class="myHeader">
+        <span>타래 충전</span>
+        <a href="myPage">✕</a>
     </div>
 	
-    <div class="content">
+    <div class="wrap">
         <div class="mycoin">
             <span class="label">나의 보유 타래</span>
             <span id="myCoin" class="amount">${userPoint} 타래</span>  
         </div>
-	<br><br><br>
-        <form action="./addPoint" method="post">
-	        <div class="payment-select-wrap">
-	            <div class="payment-select">
-	            	
-	                <input type="hidden" name="coin" id="selectedMoney" value="">
-	                <div class="coinbox" onclick="setValue(1000,1)">
-	                    <span class="coin">1타래</span>
-	                    <span class="money">1000원</span>
-	                </div>
-	                <div class="coinbox" onclick="setValue(3000,3)">
-	                    <span class="coin">3타래</span>
-	                    <span class="money">3000원</span>
-	                </div>
-	                <div class="coinbox" onclick="setValue(5000,5)">
-	                    <span class="coin">5타래</span>
-	                    <span class="money">5000원</span>
-	                </div>
-	                <div class="coinbox" onclick="setValue(10000,10)">
-	                    <span class="coin">10타래</span>
-	                    <span class="money">10000원</span>
-	                </div>
-	                <div class="coinbox" onclick="setValue(30000,30)">
-	                    <span class="coin">30타래</span>
-	                    <span class="money">30000원</span>
-	                </div>
-	                <div class="coinbox" onclick="setValue(50000,50)">
-	                    <span class="coin">50타래</span>
-	                    <span class="money">50000원</span>
-	                </div>
-	                
-	            </div>
-		<br><br>
-	        </div>
-	        <button class="charge-btn" id="chargeBtn" disabled>충전하기</button>
-	</form>
-</div></div>
+
+        <form action="./addPoint" method="post" id="chargeForm">
+            <input type="hidden" name="coin" id="selectedMoneyInput" value="">
+            
+            <div class="payment-select">
+                <div class="coinbox" onclick="setValue(1000, 1, this)">
+                    <span class="coin">1타래</span>
+                    <span class="money">1,000원</span>
+                </div>
+                <div class="coinbox" onclick="setValue(3000, 3, this)">
+                    <span class="coin">3타래</span>
+                    <span class="money">3,000원</span>
+                </div>
+                <div class="coinbox" onclick="setValue(5000, 5, this)">
+                    <span class="coin">5타래</span>
+                    <span class="money">5,000원</span>
+                </div>
+                <div class="coinbox" onclick="setValue(10000, 10, this)">
+                    <span class="coin">10타래</span>
+                    <span class="money">10,000원</span>
+                </div>
+                <div class="coinbox" onclick="setValue(30000, 30, this)">
+                    <span class="coin">30타래</span>
+                    <span class="money">30,000원</span>
+                </div>
+                <div class="coinbox" onclick="setValue(50000, 50, this)">
+                    <span class="coin">50타래</span>
+                    <span class="money">50,000원</span>
+                </div>
+            </div>
+
+            <button type="submit" class="charge-btn" id="chargeBtn" disabled>충전하기</button>
+        </form>
+    </div>
 
 <script>
-/*
- * 1. 금액 버튼을 누르면 누른 상태로 유지 되어야한다.
-   2. 금액 버튼을 눌러야만 충전하기 버튼이 눌린다.
-   3. value 값을 서블릿에 전달해야한다.
- */
- 	
-    const coinBoxes = document.querySelectorAll('.coinbox'); /*.coinbox를 모두 모아 담는다.*/
-    const chargeBtn = document.getElementById('chargeBtn'); /*충전하기 버튼 가져오기*/
-    let selectedMoney = 0; //어떤 금액을 선택했는지 저장할 공간
+    const chargeBtn = document.getElementById('chargeBtn');
+    let selectedAmount = 0;
+    let selectedCoin = 0;
 
-    coinBoxes.forEach(box => { //모든 상자
-        box.addEventListener('click', () => {
-            coinBoxes.forEach(b => b.classList.remove('selected'));
-            box.classList.add('selected'); //해당 slected를 붙여버린다.
-            
-        });
-    });
-    function setValue(money,coin){
-    	//input가져오기(id이용)
-    	const hiddenInput = document.getElementById("selectedMoney");
-    	// value에 금액 저장하기
-    	hiddenInput.value = coin;
-    	selectedMoney = money; // 만약 얼마 들었는지 구현하려면 이 변수를 이용한다.
-    	
-    	chargeBtn.disabled = false;
-	chargeBtn.addEventListener('click', () => {
-		
-	        alert(selectedMoney+"원 결제 완료!"+"\n"+coin+" 타래를 충전합니다.");
-	        //alert(coin + " 타래를 충전합니다.");
-	        
-	 });
+    function setValue(money, coin, element) {
+        // 모든 박스에서 selected 제거
+        const coinBoxes = document.querySelectorAll('.coinbox');
+        coinBoxes.forEach(box => box.classList.remove('selected'));
+        
+        // 클릭한 박스에 selected 추가
+        element.classList.add('selected');
+        
+        // 값 저장
+        document.getElementById("selectedMoneyInput").value = coin;
+        selectedAmount = money;
+        selectedCoin = coin;
+        
+        // 버튼 활성화
+        chargeBtn.disabled = false;
     }
-   
+
+    // 폼 제출 시 알림창 띄우기
+    document.getElementById('chargeForm').onsubmit = function() {
+        return confirm(selectedAmount.toLocaleString() + "원을 결제하고 " + selectedCoin + "타래를 충전하시겠습니까?");
+    };
 </script>
 </body>
 </html>

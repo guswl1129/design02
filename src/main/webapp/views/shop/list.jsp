@@ -16,7 +16,9 @@
 </style>
 </head>
 <body>
-
+	<%-- 상단 네비게이션 바 불러오기 --%>
+	<%@ include file="/nav.jsp" %>
+	
 	<h2>도안 판매 목록</h2>
 
 	<table class="shop-table">
