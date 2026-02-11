@@ -27,7 +27,7 @@
     %>
 
     <div class="edit-container">
-        <form action="updateProfileController" method="post" enctype="multipart/form-data">
+        <form action="updateProfileController" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
             <div class="profile-preview">
                 <%-- 마이페이지에서 성공했던 그 경로 그대로 사용합니다! --%>
                 <img src="${pageContext.request.contextPath}<%= user.getProfileImagePath() %>" id="current_profile_img">
@@ -58,19 +58,29 @@
 </body>
 <script type="text/javascript">
 	function validateForm() {
-	    const name = document.getElementsByName("userName")[0].value;
-	    const email = document.getElementsByName("userEmail")[0].value;
-	    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	    const name = document.querySelector('input[name="userName"]').value.trim();
+	    const email = document.querySelector('input[name="userEmail"]').value.trim();
 	
+	    // 1. 닉네임 길이 체크
+	    if (name.length === 0) {
+	        alert("닉네임을 입력해주세요.");
+	        return false;
+	    }
+	    
 	    if (name.length > 10) {
 	        alert("닉네임은 10글자 이내여야 합니다.");
 	        return false;
 	    }
+	    
+	    // 2. 이메일 형식 체크 (정규식 사용)
+	    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	    
 	    if (!emailPattern.test(email)) {
-	        alert("유효한 이메일 주소를 입력해주세요.");
+	        alert("올바른 이메일 형식이 아닙니다. (예: example@domain.com)");
 	        return false;
 	    }
+	
 	    return true;
 	}
-	</script>
+</script>
 </html>

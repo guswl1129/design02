@@ -10,7 +10,7 @@
 <title>나의 디자인</title>
 </head>
 <body>
-	<div class=myHeader> <span onclick="history.back();">&lt;</span>마이페이지</div>
+	<div class=myHeader> <span onclick="location.href='main'">&lt;</span>마이페이지</div>
 	<%
 	UserDTO user = (UserDTO)request.getAttribute("user");
 	%>
