@@ -54,7 +54,7 @@
 			</a>
 		</div>
 		<div class="category-content">
-			<a href="/editProfile" class="menu-row"> 
+			<a href="myOrderController" class="menu-row"> 
                 <span class ="menu-row-content">구매내역</span>
 				<span class="arrow-icon">></span>
 			</a>
