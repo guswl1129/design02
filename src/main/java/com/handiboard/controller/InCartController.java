@@ -52,16 +52,15 @@ public class InCartController extends HttpServlet {
      */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    // 1. 현재 로그인된 세션 정보 가져오기
-	    HttpSession session = request.getSession(false); 
+	    HttpSession session = request.getSession(false);
+	    int shopNo = Integer.parseInt(request.getParameter("shop_no"));
+        int itemNo = Integer.parseInt(request.getParameter("item_no"));
 	    
 	    // 2. 로그인 상태로 분기 
 	    if(session != null && session.getAttribute("userId") != null ) {
 	        
 	        // 데이터 파라미터 수집
 	        String userId = (String)session.getAttribute("userId");
-	        int shopNo = Integer.parseInt(request.getParameter("shop_no"));
-	        int itemNo = Integer.parseInt(request.getParameter("item_no"));
-	        
 	        String from = request.getParameter("from"); // 호출 위치 구분 ("detail" 또는 "cart")
 	        
 	        int result = -1;
@@ -105,7 +104,7 @@ public class InCartController extends HttpServlet {
 	    else {
 	        // 로그인 상태가 아니면 로그인 페이지로 리다이렉트
 	    	// 현재 페이지의 주소를 가져와서 로그인 페이지로 전달
-	        response.sendRedirect("login.jsp");
+	    	 response.sendRedirect(request.getContextPath() + "/shop/detail.do?shop_no=" + shopNo + "&msg=login_please");
 	    }
 	}
 

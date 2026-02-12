@@ -27,7 +27,7 @@
 	        if (sUserName != null) { 
 	    %>
 	        <span class="welcome-msg"><b><%= sUserName %></b>님 환영합니다!</span>
-	        <a href="logout" class="logout">로그아웃</a>
+	        <a href="${pageContext.request.contextPath}/logout" class="logout">로그아웃</a>
 	    <%
 	        } else { 
 	    %>

@@ -74,6 +74,8 @@
 	            alert("데이터베이스 처리 중 오류가 발생했습니다.");
 	        } else if (msg === 'already_purchased') {
 	            alert("이미 구매한 제품입니다.");
+	        } else if (msg === 'login_please'){
+	        	requireLogin();
 	        }
 		};
 	
@@ -91,7 +93,30 @@
 	            // 장바구니 담기 처리 서블릿으로 이동
 	            // 처리 후 서블릿에서 cartList.do로 보내주거나, 여기서 선택하게 함
 	            location.href = "<%=request.getContextPath()%>/inCart?shop_no=" + shopNo + "&item_no=" + itemNo + "&from=detail";
+	            //돌아오는 메시지가 
+	            
 	        }
+	    }
+	  	//로그인 후 이용 메서드로 분리
+	  	const contextPath = "${pageContext.request.contextPath}"; // "/handiboard02"
+	    function requireLogin() {
+	        alert("로그인 후 이용 가능합니다.");
+	        //전체 URL 받아오기
+	    	const url = new URL(window.location.href);
+	    	// 전체 URL에서 msg=login_please 제거
+	    	if (url.searchParams.get("msg") === "login_please") {
+	    	  url.searchParams.delete("msg");
+	    	}
+	    	//내부 경로 + 쿼리만 get
+	    	let path = url.pathname + url.search;
+	    	
+	    	//path에서 컨텍스트(/handiboard02) 제거
+	    	if (path.startsWith(contextPath)) {
+	    	    path = path.substring(contextPath.length);//substring: end 생략
+	    	 }
+	    	
+	    	const currentUrl = encodeURIComponent(path);
+	        location.href = contextPath + "/login?prevUrl=" + currentUrl;
 	    }
 	</script>
 

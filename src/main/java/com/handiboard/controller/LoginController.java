@@ -13,7 +13,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+/**
+ * 규칙: 서버가 contextPath 붙이기. 클라이언트는 뒷 부분만 떼서 보내기
+ * 이유: 배포환경이 바뀌어도(ex. /handiboard02 → /handiboard03) 서버의 getContextPath()가
+ * 		자동으로 맞춰줌 -> 클라이언트 의존도가 줄어들음. 에러발생 위험 낮아짐.
+ * **/
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
