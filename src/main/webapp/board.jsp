@@ -35,7 +35,6 @@
         </div>
     </div>
 
-
 	<div class="banner-section">
         <div class="banner-container">
             <div class="banner-content">
@@ -51,21 +50,6 @@
             </div> --%>
         </div>
     </div>
-
-   
-	
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<a href="logout">로그아웃</a>
-	<br>
-	<br>
-	<a href="${pageContext.request.contextPath}/myPage">마이페이지</a>
 	
 	<%-- 푸터 영역 (선택사항) --%>
     <footer class="main-footer">
