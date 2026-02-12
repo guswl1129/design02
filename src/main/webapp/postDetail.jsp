@@ -49,7 +49,7 @@
 	    	</span>
     	</div>
 		<div class="post-content">
-			작성자 : <%=dto.getUser_id() %>
+			작성자 : <%=dto.getUser_nickname() %>
 			<br>
 			작성일 : <%=dto.getDate() %>
 			<br>

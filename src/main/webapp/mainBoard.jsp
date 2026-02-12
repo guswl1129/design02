@@ -1,3 +1,4 @@
+<%@page import="com.handiboard.dto.UserDTO"%>
 <%@page import="com.handiboard.util.PagingResult"%>
 <%@page import="com.handiboard.dto.BoardDTO"%>
 <%@page import="java.util.List"%>
@@ -29,7 +30,7 @@
 		    <select name="searchType" id="searchType">
                 <option value="title">제목</option>
                 <option value="content">내용</option>
-                <option value="user_id">글쓴이</option>
+                <option value="user_nickname">글쓴이</option>
                 <option value="all">전체</option>
             </select>
 			<input type="text" id="searchWord" name="searchWord" placeholder="검색어 입력">
@@ -59,7 +60,7 @@
 					<%=dto.getTitle() %>
 				</a>
 			</td>
-			<td><%=dto.getUser_id() %></td>
+			<td><%=dto.getUser_nickname()%></td>
 			<td><%=dto.getView_count() %></td>
 			<td><%=dto.getLike_count() %></td>
 			<td><%=dto.getDate() %></td>
