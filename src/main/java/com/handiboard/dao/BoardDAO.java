@@ -25,7 +25,7 @@ public class BoardDAO {
 				dto.setBoard_no(rs.getInt("board_no"));
 				dto.setTitle(rs.getString("board_title"));
 				dto.setUser_nickname(rs.getString("user_nickname"));
-//				dto.setUser_id(rs.getString("user_id"));
+				dto.setUser_id(rs.getString("user_id"));
 				dto.setView_count(rs.getInt("board_view"));
 				dto.setLike_count(rs.getInt("board_like"));
 				dto.setDate(rs.getString("board_date"));
@@ -74,6 +74,7 @@ public class BoardDAO {
 				dto.setView_count(rs.getInt("board_view"));
 				dto.setLike_count(rs.getInt("board_like"));
 				dto.setDate(rs.getString("board_date"));
+				dto.setUser_id(rs.getString("user_id"));
 				list.add(dto);
 			}
 		} catch (Exception e) {
@@ -185,6 +186,7 @@ public class BoardDAO {
 				dto.setView_count(rs.getInt("board_view"));
 				dto.setLike_count(rs.getInt("board_like"));
 				dto.setDate(rs.getString("board_date"));
+				dto.setUser_id(rs.getString("user_id"));
 				list.add(dto);
 			}
 		} catch (Exception e) {
@@ -212,6 +214,7 @@ public class BoardDAO {
 					dto.setView_count(rs.getInt("board_view"));
 					dto.setDate(rs.getString("board_date"));
 					dto.setLike_count(rs.getInt("board_like"));
+					dto.setUser_id(rs.getString("user_id"));
 					return dto;
 				}
 			}
