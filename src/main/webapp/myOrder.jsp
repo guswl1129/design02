@@ -106,6 +106,7 @@
     .footer-action {
         padding: 20px;
         text-align: center;
+        margin-top: 350px;
     }
 
     .back-btn {

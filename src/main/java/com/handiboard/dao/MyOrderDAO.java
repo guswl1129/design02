@@ -16,7 +16,7 @@ public class MyOrderDAO {
 		String sql = "SELECT i.item_name, i.item_price, i.img_path, o.order_date, o.order_no " +
                 "FROM item i " +
                 "JOIN Orders o ON i.item_no = o.item_no " +
-                "WHERE o.buyer_id = ?";
+                "WHERE o.buyer_id = ? AND o.status = 1";
 		try(Connection conn = DBConnection.getInstance().getConn();
 				PreparedStatement pstmt = conn.prepareStatement(sql)){
 			pstmt.setString(1,id);
