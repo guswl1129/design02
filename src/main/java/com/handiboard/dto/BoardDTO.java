@@ -12,6 +12,8 @@ public class BoardDTO {
 	private int board_no, view_count, like_count, board_del;
 	private String title, name, content, user_id;
 	private String date,updated_date;
+	private String user_nickname;
+
 
 	//상대적 시간을 반환하는 메서드 추가
 	public String getRelativeDate() {

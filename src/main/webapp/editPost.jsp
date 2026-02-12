@@ -29,7 +29,7 @@
 	<br>
 	<br>
 	<form class="update-form" action="./update" method="post">
-		<div class="writer">작성자: <%=dto.getUser_id() %></div>
+		<div class="writer">작성자: <%=dto.getUser_nickname() %></div>
 	    <input type="hidden" name="board_no" value="<%=dto.getBoard_no() %>">
 		<input class="update-title" type="text" name="title" value="<%=dto.getTitle() %>">
 		<br>
