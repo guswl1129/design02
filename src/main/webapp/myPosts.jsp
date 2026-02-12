@@ -96,6 +96,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis; /* 제목이 길면 ... 처리 */
+        margin-top: 10px
     }
 
     /* 데이터 없을 때 */
@@ -128,6 +129,15 @@
         background-color: #f8f9fa;
         color: #333;
     }
+    .post-nickname{
+    	color: orange;
+    	font-size: 0.8rem;
+    
+    }
+    .nickname{
+    margin-left: auto;
+    margin-top: 10px;
+    }
 </style>
 </head>
 <body>
@@ -159,6 +169,7 @@
                 <span class="post-date"><%= dto.getDate() %></span>
             </div>
             <div class="post-title"><%= dto.getTitle() %></div>
+            <div class="nickname"><span class="post-nickname"><%= dto.getUser_nickname() %></span></div>
         </div>
         <% 
             }

@@ -12,7 +12,7 @@ import com.handiboard.util.DBConnection;
 public class MyPostsDAO {
 	public List<BoardDTO> LoadPosts(String id) {
 	    List<BoardDTO> list = new ArrayList<>();
-	    String sql = "SELECT board_no, board_title, Date(board_date)AS board_date FROM board WHERE user_id = ? AND board_del = 1";
+	    String sql = "SELECT b.board_no, b.board_title,u.user_nickname, Date(board_date)AS board_date FROM board b JOIN Users u ON u.user_id = b.user_id WHERE b.user_id = ? AND b.board_del = 1";
 
 	    try (Connection conn = DBConnection.getInstance().getConn();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -24,6 +24,7 @@ public class MyPostsDAO {
 	                dto.setBoard_no(rs.getInt("board_no"));
 	                dto.setTitle(rs.getString("board_title"));
 	                dto.setDate(rs.getString("board_date"));
+	                dto.setUser_nickname(rs.getString("user_nickname"));
 	                list.add(dto);
 	            }
 	        }
