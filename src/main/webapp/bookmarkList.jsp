@@ -24,7 +24,6 @@
 		for (BoardDTO bookmark : bookList) { %>
 		
 		<div class="category-box">
-			<a href="${pageContext.request.contextPath}/detail?board_no=<%=bookmark.getBoard_no() %>">
 			<div class="post-info">
 		        <div class="user-group">
 		            <span class="user-id"><%=bookmark.getUser_id()%></span>
@@ -35,9 +34,10 @@
 		            <img src="${pageContext.request.contextPath}/book_filled.png" class="bookmark-icon">
 		        </span>
 		    </div>
-			<div class="post-title"><%=bookmark.getTitle()%></div>
-	    	<div class="post-content"><%=bookmark.getContent()%></div>
-	    	<div class="post-stats"><img src="./like_icon.png" id=like_icon> <%=bookmark.getLike_count()%></div>
+		    <a href="${pageContext.request.contextPath}/detail?board_no=<%=bookmark.getBoard_no() %>">
+				<div class="post-title"><%=bookmark.getTitle()%></div>
+	    		<div class="post-content"><%=bookmark.getContent()%></div>
+	    		<div class="post-stats"><img src="./like_icon.png" id=like_icon> <%=bookmark.getLike_count()%></div>
 			</a>
 		</div>
 		<%}
