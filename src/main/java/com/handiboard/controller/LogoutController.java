@@ -35,8 +35,8 @@ public class LogoutController extends HttpServlet {
 			session.invalidate();
 		}
 		
-		// 로그인 페이지로 이동
-		response.sendRedirect("login.jsp");
+		// 로그인 페이지로 이동 -> 메인 페이지로 이동 수정함
+		response.sendRedirect(request.getContextPath() + "/main");
 	}
 
 	/**
