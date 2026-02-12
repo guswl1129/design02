@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import com.handiboard.dao.BoardDAO;
@@ -30,9 +32,27 @@ public class BoardDeleteController extends HttpServlet {
 			return;
 		}
 		
-		BoardDAO dao=new BoardDAO();
+		// 같은 사람인지 확인
+		String userId = null;
+		HttpSession session = request.getSession(false);
+		userId = (String) session.getAttribute("userId");
+		
+		if (userId == null || board_no <= 0) {
+		    response.sendRedirect(request.getContextPath()+"/board");
+		    return;
+		}
+
+		BoardDAO dao = new BoardDAO();
 		BoardDTO dto=dao.getBoard(board_no);
-		dao.deleteBoard(dto);
+		
+		if(userId.equals(dto.getUser_id())) {
+			dao.deleteBoard(dto);
+		}
+		else {
+			System.out.println("작성자가 다름");
+			response.sendRedirect(request.getContextPath()+"/board");
+			return;
+		}
 		
 		response.sendRedirect(request.getContextPath() + "/board");
 	}

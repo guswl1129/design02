@@ -259,17 +259,20 @@ public class BoardDAO {
 	
 	// 삭제
 	public void deleteBoard(BoardDTO dto) {
-		String sql="UPDATE board SET board_del=0 WHERE board_no=?";
+		int result=0;
+		
+		String sql="UPDATE board SET board_del=0 WHERE board_no=? and user_id=?";
 		
 		try (Connection conn=DBConnection.getInstance().getConn();
 				PreparedStatement pstmt=conn.prepareStatement(sql);){
 			pstmt.setInt(1, dto.getBoard_no());
+			pstmt.setString(2, dto.getUser_id());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
+	
 	// 좋아요 누르기
 	public int likeBoard(BoardDTO dto) {
 		String sql="UPDATE board SET board_like=board_like+? WHERE board_no=?";
