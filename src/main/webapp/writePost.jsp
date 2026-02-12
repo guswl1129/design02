@@ -20,7 +20,7 @@
 <section class="write-section">
 
 	<div class="right-btn">
-		<button class="back-btn" onclick="history.back()">리스트로 돌아가기</button>
+		<button class="back-btn" onclick="location.href='${pageContext.request.contextPath}/board'">리스트로 돌아가기</button>
 	</div>
 	<br>
     <br>
