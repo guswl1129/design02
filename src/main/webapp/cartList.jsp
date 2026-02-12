@@ -63,7 +63,7 @@
                 </div>
                 
                 <span class="cart-toggle-btn" onclick="removeFromCart(<%=item.getShop_no()%>, <%=item.getItem_no()%>)">
-                    <img src="${pageContext.request.contextPath}/cart_filled.png" alt="장바구니삭제">
+                    <img src="${pageContext.request.contextPath}/cart_remove.png" alt="장바구니삭제">
                 </span>
             </div>
             <% } %>

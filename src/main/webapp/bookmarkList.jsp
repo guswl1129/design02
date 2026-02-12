@@ -14,7 +14,7 @@
     <script src="${pageContext.request.contextPath}/myList.js"></script>
 </head>
 <body>
-	<div class=myHeader> <span onclick="history.back();">&lt;</span>북마크 모아보기</div> <%--공통 css 파일로 빼기--%>
+	<div class=myHeader> <span onclick="location.href='${pageContext.request.contextPath}/myPage'">&lt;</span>북마크 모아보기</div> <%--공통 css 파일로 빼기--%>
 	<%
 	@SuppressWarnings("unchecked") 
 	List<BoardDTO> bookList = (ArrayList<BoardDTO>)request.getAttribute("bookList");
