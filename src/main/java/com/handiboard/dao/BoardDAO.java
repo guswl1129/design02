@@ -266,11 +266,11 @@ public class BoardDAO {
 		try (Connection conn = DBConnection.getInstance().getConn();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, dto.getBoard_no());
+			pstmt.setString(2, dto.getUser_id());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	// 좋아요 누르기

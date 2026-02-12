@@ -51,37 +51,47 @@ public class BoardUpdateController extends HttpServlet {
 		System.out.println("update doPost");
 		
 		request.setCharacterEncoding("UTF-8");
+		
+		BoardDTO dto=new BoardDTO();
+		
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");
+		String user_id=request.getParameter("user_id");
 		int board_no=request.getParameter("board_no")!=null?Integer.parseInt(request.getParameter("board_no")):-1;
 		
 		String userId=null;
 		HttpSession session = request.getSession(false);
-		if (session != null && session.getAttribute("user_id") != null) {
-			userId = (String) session.getAttribute("user_id");
+		if (session != null && session.getAttribute("userId") != null) {
+			userId = (String) session.getAttribute("userId");
 		} else {
-			userId = request.getParameter("user_id");
+			userId = request.getParameter("userId");
 		}
 		// if still null or empty, cannot proceed - redirect to login or board list
 		if (userId == null || userId.trim().isEmpty()) {
-			System.out.println("user_id is missing; redirecting to login page");
+			System.out.println("userId is missing; redirecting to login page");
 			response.sendRedirect(request.getContextPath() + "/login.jsp");
 			return;
 //			userId="duck"; // 임시 기본값 설정
 		}
 		
-		BoardDTO dto=new BoardDTO();
-		dto.setTitle(title);
-		dto.setContent(content);
-		// Ensure the BoardController number is set so updateBoard can find the row
-		if(board_no > 0) {
+		// 같은 유저가 맞는지 확인
+		if(userId!=null&&userId.equals(user_id)&&board_no > 0) {	// Ensure the BoardController number is set so updateBoard can find the row
 			dto.setBoard_no(board_no);
+			dto.setTitle(title);
+			dto.setContent(content);
+			
+			BoardDAO dao=new BoardDAO();
+			dao.updateBoard(dto);
 		} else {
 			System.out.println("updateAction: missing or invalid board_no: " + board_no);
+			System.out.println("아이디가 달라 수정할 수 없음");
+			System.out.println("userId: "+userId);
+			System.out.println("user_id: "+user_id);
+			response.sendRedirect(request.getContextPath()+"/board");
+			return;
 		}
 		
-		BoardDAO dao=new BoardDAO();
-		dao.updateBoard(dto);
+		
 		// PRG: 저장 후 리스트 서블릿으로 리다이렉트
 		response.sendRedirect(request.getContextPath() + "/detail?board_no="+board_no);
 	}
