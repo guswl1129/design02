@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/mainBoard.css">
-<title>커뮤니티</title>
+<title>Insert title here</title>
 </head>
 <body>
 	<!-- servlet에서 보낸 값 받기 -->
@@ -25,20 +25,31 @@
 	<%-- 상단 네비게이션 바 불러오기 --%>
 	<%@ include file="/nav.jsp" %>
 	
-	<div class=right-btn>
-		<form class="search-type" action="./board" method="get">
-		    <select name="searchType" id="searchType">
-                <option value="title">제목</option>
-                <option value="content">내용</option>
-                <option value="user_nickname">글쓴이</option>
-                <option value="all">전체</option>
-            </select>
-			<input type="text" id="searchWord" name="searchWord" placeholder="검색어 입력">
-			<input class="search-btn" type="submit" value="검색">
-		</form>
-		<button class="write-btn" type="button" onclick="location.href='./write'">글쓰기</button>
+	
+	<div class="top-container">
+		<div class="left-btn">
+			<a href="${pageContext.request.contextPath}/bookmark" title="내 북마크 바로가기">
+				<img src="${pageContext.request.contextPath }/book_filled.png" alt="북마크">
+			</a>
+		</div>
+		
+		<div class="right-btn">
+			<form class="search-type" action="./board" method="get">
+			    <select name="searchType" id="searchType">
+	                <option value="title">제목</option>
+	                <option value="content">내용</option>
+	                <option value="user_nickname">글쓴이</option>
+	                <option value="all">전체</option>
+	            </select>
+				<input type="text" id="searchWord" name="searchWord" placeholder="검색어 입력">
+				<input class="search-btn" type="submit" value="검색">
+			</form>
+			<button class="write-btn" type="button" onclick="location.href='./write'">글쓰기</button>
+		</div>
 	</div>
+	
 	<br>
+	
 	<table class="board-table">
 		<tr class="board-header">
 			<th>번호</th>
