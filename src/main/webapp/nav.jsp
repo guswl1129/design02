@@ -31,7 +31,7 @@
 	    <%
 	        } else { 
 	    %>
-	        <a href="login.jsp" class="auth-link">로그인</a>
+	        <a href="${pageContext.request.contextPath}/login" class="auth-link">로그인</a>
 	    <%
 	        } 
 	    %>
