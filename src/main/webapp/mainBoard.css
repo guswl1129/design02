@@ -9,47 +9,7 @@
 	color: black;
 	text-decoration: none;
 }
-/* 추가된 왼쪽 북마크 버튼: 플로팅 버튼 스타일 */
-/* 상단 컨테이너: 왼쪽 북마크와 오른쪽 검색창을 양옆으로 정렬 */
-.top-container {
-    display: flex;
-    justify-content: space-between; /* 양 끝으로 배치 */
-    align-items: center;            /* 수직 중앙 정렬 */
-    margin: 20px auto;
-    max-width: 1200px;              /* 네비바와 너비 맞춤 */
-    padding: 0 10px;
-}
-/* 왼쪽 북마크 버튼: 고정 해제 및 스타일 수정 */
-.left-btn {
-    /* position: fixed; 삭제 - 컨테이너 안에 흐르도록 설정 */
-    display: block;
-}
-.left-btn a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;                /* 상단 영역에 맞게 크기 살짝 조절 */
-    height: 50px;
-    background-color: #FFF9F0;
-    border: 2px solid #FFE0B2;
-    border-radius: 15px;        /* 둥근 사각형이 컨테이너 안에서 더 안정적임 */
-    box-shadow: 0 4px 10px rgba(255, 138, 101, 0.1);
-    transition: all 0.3s ease;
-}
 
-/* 🖼️ 이미지 스타일 추가 */
-.left-btn a img {
-    width: 35px;       /* 아이콘 이미지 크기 */
-    height: 35px;
-    object-fit: contain;
-}
-
-/* 호버 효과: 컨테이너 안이므로 옆이 아니라 살짝 커지는 느낌으로 */
-.left-btn a:hover {
-    background-color: #FFF0E0; 
-    transform: scale(1.05); 
-    border-color: #FF8A65;
-}
 
 .right-btn{
 	text-align: right;
