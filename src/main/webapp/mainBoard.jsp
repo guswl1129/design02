@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/mainBoard.css">
-<title>Insert title here</title>
+<title>커뮤니티</title>
 </head>
 <body>
 	<!-- servlet에서 보낸 값 받기 -->
